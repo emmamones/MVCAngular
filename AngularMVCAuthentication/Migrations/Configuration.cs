@@ -15,31 +15,31 @@ namespace AngularMVCAuthentication.Migrations
         protected override void Seed(AngularMVCAuthentication.Models.ApplicationDbContext context)
         {
             context.People.AddOrUpdate(p => p.FirstName,
-               new Person
+               new People
                {
                    FirstName = "Debra Garcia",
                    Retired = true,
                    Email = "debra@example.com",
                },
-                new Person
+                new People
                 {
                     FirstName = "Thorsten Weinrich",
                     Retired = true,
                     Email = "thorsten@example.com",
                 },
-                new Person
+                new People
                 {
                     FirstName = "Yuhong Li",
                     Retired = false,
                     Email = "yuhong@example.com",
                 },
-                new Person
+                new People
                 {
                     FirstName = "Jon Orton",
                     Retired = true,
                     Email = "jon@example.com",
                 },
-                new Person
+                new People
                 {
                     FirstName = "Diliana Alexieva-Bosseva",
                     Retired = false,

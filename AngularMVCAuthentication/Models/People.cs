@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AngularMVCAuthentication.Models
 {
-    public class Person
+    public class People
     {
         public int PersonId { get; set; }
         public string FirstName { get; set; }
