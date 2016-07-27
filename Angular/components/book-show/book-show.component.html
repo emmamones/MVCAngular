@@ -1,0 +1,6 @@
+<h1>Book: {{$ctrl.book.title}}</h1>
+<h2>{{$ctrl.book.author}}</h2>
+<p>{{$ctrl.book.abstract}}</p>
+<p><small>ISBN: {{$ctrl.book.isbn}}</small></p>
+
+<p><a ng-link="['BookEdit', {isbn: $ctrl.book.isbn}]">Edit me!</a></p>

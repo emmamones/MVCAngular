@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "People Controller info";
+}
+
+@section scripts {
+<script src="~/app/People/App.js"></script>
+<script src="~/app/People/ViewModels/RootViewModel.js"></script>
+<script src="~/app/People/ViewModels/peopleHomeViewModel.js"></script>
+<script src="~/app/People/ViewModels/peopleListViewModel.js"></script>
+<script src="~/app/People/ViewModels/detailsViewModel.js"></script>
+}
+
+@section jscode{ 
+       angular.bootstrap(document.getElementById("people"), ['people']);
+}
+
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+ 
+<div ng-non-bindable>
+    <div id="people" data-ng-controller="rootViewModel">
+        <h4>{{ pageheading }}</h4>   
+        @*<button class="btn btn-primary" ng-click="peopleList()">See PeopleList</button>*@
+
+        <div ng-view></div>
+    </div>
+    
+   
+</div>

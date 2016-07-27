@@ -1,0 +1,48 @@
+﻿<h5>{{ heading }}</h5>
+<br />
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>FirstName Name</th> 
+            <th>retired</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="p in people">
+            <td> <a  ng-click="showPerson(p)">select</a></td>
+            <td>{{p.FirstName}}</td> 
+            <td>{{p.Email}}</td> 
+            <td><div class="checkbox"><input type="checkbox" ng-model="p.Retired"></div></td>
+        </tr>
+        <tr data-ng-if="people.lenght==0">
+            <td>No elements to display</td>
+        </tr>
+        <tr ng-if="states.showPersonForm">
+            <td>add another user</td>
+            <td>
+                <input type="text" class="form-control" ng-model="new.entity.FirstName" />
+            </td>
+             
+            <td>
+                <input type="checkbox" ng-model="new.entity.Retired" />
+            </td>
+            <td>
+                <input type="text" class="form-control" ng-model="new.entity.Email" />
+            </td>
+            <td>
+                <input type="button" ng-click="save()" class="btn btn-primary" value="save user" />
+            </td>
+
+        </tr>
+        <tr>
+            <td>{{new.entity | json}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<input type="button" ng-click="AddUser(true)" class="btn btn-primary" value="Add user" />
+
+<br />
+
+<a href="Details">Go to People Details</a>

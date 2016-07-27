@@ -1,0 +1,33 @@
+<form ng-submit="$ctrl.handleSubmit($ctrl.book)" name="$ctrl.myForm" novalidate>
+  <div class="form-group">
+    <label>Book's Title</label>
+    <input type="text"
+           class="form-control"
+           name="title"
+           placeholder="title"
+           ng-model="$ctrl.book.title"
+           required
+           minlength="4">
+    <span class="help-text" ng-if="$ctrl.myForm.title.$dirty && $ctrl.myForm.title.$error.minlength">
+      Enter at least four chars, please.
+    </span>
+    <span class="help-text" ng-if="$ctrl.myForm.title.$dirty && $ctrl.myForm.title.$error.required">
+      Enter text here, please.
+    </span>
+  </div>
+  <div class="form-group">
+    <label>Author's name</label>
+    <input type="text"
+           class="form-control"
+           placeholder="author"
+           ng-model="$ctrl.book.author">
+  </div>
+  <div class="form-group">
+    <label>Abstract</label>
+    <textarea class="form-control" ng-model="$ctrl.book.abstract"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-default" ng-disabled="$ctrl.myForm.$invalid">Save book</button>
+
+  <pre>$ctrl.myForm = {{$ctrl.myForm | json}}</pre>
+</form>

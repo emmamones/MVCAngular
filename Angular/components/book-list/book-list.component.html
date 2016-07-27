@@ -1,0 +1,11 @@
+<input type="text" ng-model="$ctrl.search.$" placeholder="❤ search">
+<input type="text" ng-model="$ctrl.search.isbn" placeholder="ISBN ❤">
+
+<ul>
+  <li ng-repeat="book in $ctrl.books | filter:$ctrl.search | orderBy:'isbn' | limitTo:2" style="border: 1px solid indigo; margin-bottom: 1rem">
+    <h2><a ng-link="['BookShow', {isbn: book.isbn}]">{{book.title}} by {{book.author}}</a></h2>
+    <small>ISBN: {{book.isbn}}</small>
+  </li>
+</ul>
+
+<pre>$ctrl = {{$ctrl | json}}</pre>
