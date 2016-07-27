@@ -213,8 +213,6 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Content\zocial.ttf" />
-    <None Include="Properties\PublishProfiles\VamonosTacos - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\VamonosTacos - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
