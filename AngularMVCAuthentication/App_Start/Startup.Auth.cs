@@ -54,15 +54,15 @@ namespace AngularMVCAuthentication
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "1063933260365560",
+               appSecret: "2c9f2e37400171dfbd86ae95d82492ff");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1014946797128-tcork66oe74h7ui29ftdatsnjaa3g7bm.apps.googleusercontent.com",
+                ClientSecret = "GC-Urig3lWkoJB5yKOiovii-"
+            });
         }
     }
 }
