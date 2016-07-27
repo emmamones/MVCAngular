@@ -8,7 +8,7 @@ namespace AngularMVCAuthentication.Models
 {
     public class People
     {
-        public int PersonId { get; set; }
+        public int PeopleId { get; set; }
         public string FirstName { get; set; }
         
         public bool Retired { get; set; }
