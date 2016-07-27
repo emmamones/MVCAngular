@@ -36,6 +36,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: People/Create
+        [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace AngularMVCAuthentication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canEdit")]
         public ActionResult Create([Bind(Include = "PeopleId,FirstName,Retired,Email")] People people)
         {
             if (ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: People/Edit/5
+        [Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +80,7 @@ namespace AngularMVCAuthentication.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "canEdit")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PeopleId,FirstName,Retired,Email")] People people)
         {
@@ -90,6 +94,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: People/Delete/5
+        [Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // POST: People/Delete/5
+        [Authorize(Roles = "canEdit")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -174,9 +174,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607270935403_Initial.cs" />
-    <Compile Include="Migrations\201607270935403_Initial.Designer.cs">
-      <DependentUpon>201607270935403_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201607271003535_Initial.cs" />
+    <Compile Include="Migrations\201607271003535_Initial.Designer.cs">
+      <DependentUpon>201607271003535_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -198,6 +198,7 @@
     <Content Include="app\People\Views\PeopleListView.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\zocial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -211,6 +212,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Content\zocial.ttf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -276,8 +278,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607270935403_Initial.resx">
-      <DependentUpon>201607270935403_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607271003535_Initial.resx">
+      <DependentUpon>201607271003535_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

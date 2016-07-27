@@ -13,7 +13,7 @@ namespace AngularMVCAuthentication.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201607270935403_Initial"; }
+            get { return "201607271003535_Initial"; }
         }
         
         string IMigrationMetadata.Source
