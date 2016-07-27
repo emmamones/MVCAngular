@@ -4,7 +4,7 @@ namespace AngularMVCAuthentication.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using AngularMVCAuthentication.Models;
+
     internal sealed class Configuration : DbMigrationsConfiguration<AngularMVCAuthentication.Models.ApplicationDbContext>
     {
         public Configuration()
@@ -14,38 +14,18 @@ namespace AngularMVCAuthentication.Migrations
 
         protected override void Seed(AngularMVCAuthentication.Models.ApplicationDbContext context)
         {
-            context.People.AddOrUpdate(p => p.FirstName,
-       new Person
-       {
-           FirstName = "Debra Garcia", 
-           Retired=true,
-           Email = "debra@example.com",
-       },
-        new Person
-        {
-            FirstName = "Thorsten Weinrich",
-            Retired = true,
-            Email = "thorsten@example.com",
-        },
-        new Person
-        {
-            FirstName = "Yuhong Li",
-            Retired = false,
-            Email = "yuhong@example.com",
-        },
-        new Person
-        {
-            FirstName = "Jon Orton",
-            Retired = true,
-            Email = "jon@example.com",
-        },
-        new Person
-        {
-            FirstName = "Diliana Alexieva-Bosseva",
-            Retired = false,
-            Email = "diliana@example.com",
-        }
-        );
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
         }
     }
 }
