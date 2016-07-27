@@ -10,9 +10,7 @@ namespace AngularMVCAuthentication.Models
     {
         public int PersonId { get; set; }
         public string FirstName { get; set; }
-
-        public string LastName { get; set; }  
-
+        
         public bool Retired { get; set; }
 
         [DataType(DataType.EmailAddress)]
