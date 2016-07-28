@@ -370,7 +370,8 @@ namespace AngularMVCAuthentication.Controllers
                 var user = new ApplicationUser {
                     UserName = model.Email, Email = model.Email,
                     BirthDate = model.BirthDate,
-                    HomeTown = model.HomeTown
+                    HomeTown = model.HomeTown,
+                    Eventos= new System.Collections.Generic.List<Evento>()
                 };
 
                 var result = await UserManager.CreateAsync(user);

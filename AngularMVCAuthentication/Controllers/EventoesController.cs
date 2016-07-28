@@ -7,60 +7,75 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AngularMVCAuthentication.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace AngularMVCAuthentication.Controllers
 {
-    public class PeopleController : Controller
+    public class EventoesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext db ;
+        private ApplicationUser currentUser;
+        private UserManager<ApplicationUser> manager;
 
-        // GET: People
+        public EventoesController()
+        {
+            db = new ApplicationDbContext();
+            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+          
+        }
+        // GET: Eventoes
         public ActionResult Index()
         {
-            return View(db.People.ToList());
+            currentUser = manager.FindById(User.Identity.GetUserId());
+            return View(db.Eventoes.ToList());
         }
 
-        // GET: People/Details/5
+        // GET: Eventoes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.People.Find(id);
-            if (people == null)
+            Evento evento = db.Eventoes.Find(id);
+            if (evento == null)
             {
                 return HttpNotFound();
             }
-            return View(people);
+            return View(evento);
         }
 
-        // GET: People/Create
+        // GET: Eventoes/Create
         [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: People/Create
+        // POST: Eventoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canEdit")]
-        public ActionResult Create([Bind(Include = "PeopleId,FirstName,Retired,Email")] People people)
+        public ActionResult Create([Bind(Include = "EventoId,Title,Date,Location,URL,Recommendation,IsDeleted,RowVersion")] Evento evento)
         {
+           
             if (ModelState.IsValid)
             {
-                db.People.Add(people);
+                evento.ApplicationUser = currentUser;
+                db.Eventoes.Add(evento);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(people);
+            return View(evento);
         }
 
-        // GET: People/Edit/5
+        // GET: Eventoes/Edit/5
         [Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
@@ -68,32 +83,32 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.People.Find(id);
-            if (people == null)
+            Evento evento = db.Eventoes.Find(id);
+            if (evento == null)
             {
                 return HttpNotFound();
             }
-            return View(people);
+            return View(evento);
         }
 
-        // POST: People/Edit/5
+        // POST: Eventoes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "canEdit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PeopleId,FirstName,Retired,Email")] People people)
+        [Authorize(Roles = "canEdit")]
+        public ActionResult Edit([Bind(Include = "EventoId,Title,Date,Location,URL,Recommendation,IsDeleted,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(people).State = EntityState.Modified;
+                db.Entry(evento).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(people);
+            return View(evento);
         }
 
-        // GET: People/Delete/5
+        // GET: Eventoes/Delete/5
         [Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
@@ -101,22 +116,32 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            People people = db.People.Find(id);
-            if (people == null)
+            
+
+            Evento evento = db.Eventoes.Find(id);
+            if (evento == null)
             {
                 return HttpNotFound();
             }
-            return View(people);
+
+            if (evento.Organizer != currentUser.UserName)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Only the Organizer can delete his event");
+                //return RedirectToAction("Index");
+            }
+            //return Json(new { status = "error", message = "You are not the Organizer" });
+
+            return View(evento);
         }
 
-        // POST: People/Delete/5
-        [Authorize(Roles = "canEdit")]
+        // POST: Eventoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canEdit")]
         public ActionResult DeleteConfirmed(int id)
         {
-            People people = db.People.Find(id);
-            db.People.Remove(people);
+            Evento evento = db.Eventoes.Find(id);
+            db.Eventoes.Remove(evento);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

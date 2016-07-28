@@ -1,0 +1,18 @@
+namespace AngularMVCAuthentication.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class ModOrganizer : DbMigration
+    {
+        public override void Up()
+        {
+            DropColumn("dbo.Eventoes", "Organizer");
+        }
+        
+        public override void Down()
+        {
+            AddColumn("dbo.Eventoes", "Organizer", c => c.String());
+        }
+    }
+}

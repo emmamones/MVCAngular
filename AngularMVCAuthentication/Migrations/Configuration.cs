@@ -1,12 +1,13 @@
 namespace AngularMVCAuthentication.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using AngularMVCAuthentication.Models;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AngularMVCAuthentication.Models.ApplicationDbContext>
     {
@@ -14,7 +15,8 @@ namespace AngularMVCAuthentication.Migrations
         {
             AutomaticMigrationsEnabled = false;
         }
-        bool AddUserAndRole(AngularMVCAuthentication.Models.ApplicationDbContext context)
+
+        ApplicationUser AddUserAndRole(AngularMVCAuthentication.Models.ApplicationDbContext context)
         {
             IdentityResult ir;
             var rm = new RoleManager<IdentityRole>
@@ -28,51 +30,47 @@ namespace AngularMVCAuthentication.Migrations
             var user = new ApplicationUser()
             {
                 UserName = "user1@contoso.com",
+                Eventos = new List<Evento>()
             };
 
             ir = um.Create(user, "P_assw0rd1");
             if (ir.Succeeded == false)
-                return ir.Succeeded;
+                return null;
 
             ir = um.AddToRole(user.Id, "canEdit");
-            return ir.Succeeded;
+            return user;
         }
 
         protected override void Seed(AngularMVCAuthentication.Models.ApplicationDbContext context)
         {
 
-            AddUserAndRole(context);
-            
-            context.People.AddOrUpdate(p => p.FirstName,
-                 new People
-                 {
-                     FirstName = "Debra Garcia",
-                     Retired = true,
-                     Email = "debra@example.com",
-                 },
-                  new People
+            var defaultUser = AddUserAndRole(context); 
+             
+            context.Eventoes.AddOrUpdate(p => p.Title,
+                  new Evento
                   {
-                      FirstName = "Thorsten Weinrich",
-                      Retired = true,
-                      Email = "thorsten@example.com",
+                      Title = "Debra Garcia",
+                      ApplicationUser = defaultUser
                   },
-                  new People
+                  new Evento
                   {
-                      FirstName = "Yuhong Li",
-                      Retired = false,
-                      Email = "yuhong@example.com",
+                      Title = "Thorsten Weinrich",
+                      ApplicationUser = defaultUser
                   },
-                  new People
+                  new Evento
                   {
-                      FirstName = "Jon Orton",
-                      Retired = true,
-                      Email = "jon@example.com",
+                      Title = "Yuhong Li",
+                      ApplicationUser = defaultUser
                   },
-                  new People
+                  new Evento
                   {
-                      FirstName = "Diliana Alexieva-Bosseva",
-                      Retired = false,
-                      Email = "diliana@example.com",
+                      Title = "Jon Orton",
+                      ApplicationUser = defaultUser
+                  },
+                  new Evento
+                  {
+                      Title = "Diliana Alexieva-Bosseva",
+                      ApplicationUser = defaultUser
                   }
                   );
         }

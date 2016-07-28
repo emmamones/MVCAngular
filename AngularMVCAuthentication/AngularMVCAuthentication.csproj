@@ -168,21 +168,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventoesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PeopleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201607271003535_Initial.cs" />
-    <Compile Include="Migrations\201607271003535_Initial.Designer.cs">
-      <DependentUpon>201607271003535_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201607281107368_InitialModel.cs" />
+    <Compile Include="Migrations\201607281107368_InitialModel.Designer.cs">
+      <DependentUpon>201607281107368_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607281136338_ModOrganizer.cs" />
+    <Compile Include="Migrations\201607281136338_ModOrganizer.Designer.cs">
+      <DependentUpon>201607281136338_ModOrganizer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201607281211415_RemoveSeccion.cs" />
+    <Compile Include="Migrations\201607281211415_RemoveSeccion.Designer.cs">
+      <DependentUpon>201607281211415_RemoveSeccion.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\People.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -260,11 +267,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\People.cshtml" />
-    <Content Include="Views\People\Create.cshtml" />
-    <Content Include="Views\People\Delete.cshtml" />
-    <Content Include="Views\People\Details.cshtml" />
-    <Content Include="Views\People\Edit.cshtml" />
-    <Content Include="Views\People\Index.cshtml" />
+    <Content Include="Views\Eventoes\Create.cshtml" />
+    <Content Include="Views\Eventoes\Delete.cshtml" />
+    <Content Include="Views\Eventoes\Details.cshtml" />
+    <Content Include="Views\Eventoes\Edit.cshtml" />
+    <Content Include="Views\Eventoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,8 +285,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201607271003535_Initial.resx">
-      <DependentUpon>201607271003535_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607281107368_InitialModel.resx">
+      <DependentUpon>201607281107368_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607281136338_ModOrganizer.resx">
+      <DependentUpon>201607281136338_ModOrganizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607281211415_RemoveSeccion.resx">
+      <DependentUpon>201607281211415_RemoveSeccion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
