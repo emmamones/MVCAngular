@@ -14,26 +14,25 @@ using Microsoft.AspNet.Identity.Owin;
 
 namespace AngularMVCAuthentication.Controllers
 {
-    public class EventoesController : Controller
+    public class InvalidEventoesController : Controller
     {
         private ApplicationDbContext dbAuthentication = new ApplicationDbContext();
         private ModelContext dbEventos = new ModelContext();
         private ApplicationUser currentUser;
         private UserManager<ApplicationUser> manager;
 
-        public EventoesController()
+        public InvalidEventoesController()
         {
             dbAuthentication = new ApplicationDbContext();
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbAuthentication));
             currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
 
         }
-
         // GET: Eventoes
         public ActionResult Index()
         {
-               currentUser = manager.FindById(User.Identity.GetUserId());
-            return View(dbAuthentication.Eventoes.ToList());
+            currentUser = manager.FindById(User.Identity.GetUserId());
+            return View(dbEventos.Eventoes.ToList());
         }
 
         // GET: Eventoes/Details/5
@@ -43,7 +42,7 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = dbAuthentication.Eventoes.Find(id);
+            Evento evento = dbEventos.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
@@ -68,8 +67,8 @@ namespace AngularMVCAuthentication.Controllers
         {
             if (ModelState.IsValid)
             {
-                dbAuthentication.Eventoes.Add(evento);
-                dbAuthentication.SaveChanges();
+                dbEventos.Eventoes.Add(evento);
+                dbEventos.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -84,7 +83,7 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = dbAuthentication.Eventoes.Find(id);
+            Evento evento = dbEventos.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
@@ -97,12 +96,13 @@ namespace AngularMVCAuthentication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canEdit")]
         public ActionResult Edit([Bind(Include = "EventoId,Title,Date,Location,URL,Recommendation,IsDeleted,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                dbAuthentication.Entry(evento).State = EntityState.Modified;
-                dbAuthentication.SaveChanges();
+                dbEventos.Entry(evento).State = EntityState.Modified;
+                dbEventos.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(evento);
@@ -116,7 +116,7 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = dbAuthentication.Eventoes.Find(id);
+            Evento evento = dbEventos.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
@@ -137,9 +137,9 @@ namespace AngularMVCAuthentication.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evento evento = dbAuthentication.Eventoes.Find(id);
-            dbAuthentication.Eventoes.Remove(evento);
-            dbAuthentication.SaveChanges();
+            Evento evento = dbEventos.Eventoes.Find(id);
+            dbEventos.Eventoes.Remove(evento);
+            dbEventos.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -148,6 +148,7 @@ namespace AngularMVCAuthentication.Controllers
             if (disposing)
             {
                 dbAuthentication.Dispose();
+                dbEventos.Dispose();
             }
             base.Dispose(disposing);
         }

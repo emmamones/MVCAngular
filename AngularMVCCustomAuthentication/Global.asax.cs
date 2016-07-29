@@ -1,16 +1,14 @@
-﻿using AngularMVCAuthentication.Models;
-using DataModel;
+﻿using AngularMVCCustomAuthentication.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace AngularMVCAuthentication
+namespace AngularMVCCustomAuthentication
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -20,16 +18,7 @@ namespace AngularMVCAuthentication
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            if (Debugger.IsAttached)
-            {
-                InitDataBase.SetInitializer();
-                System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApplicationDbContextConfiguration>(true));
-            }
-            else
-            {
-                System.Data.Entity.Database.SetInitializer<ApplicationDbContext>(null);
-            }
+            Database.SetInitializer<ApplicationDbContext>(new MyDbInitializer());
         }
     }
 }

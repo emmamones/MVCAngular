@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using AngularMVCAuthentication.Models;
+using AngularMVCCustomAuthentication.Models;
 
-namespace AngularMVCAuthentication.Controllers
+namespace AngularMVCCustomAuthentication.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -367,17 +367,10 @@ namespace AngularMVCAuthentication.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser {
-                    UserName = model.Email, Email = model.Email,
-                    BirthDate = model.BirthDate,
-                    HomeTown = model.HomeTown
-                    //,Eventos= new System.Collections.Generic.List<Evento>()
-                };
-
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "canEdit");
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

@@ -1,19 +1,21 @@
 ﻿@model IEnumerable<AngularMVCAuthentication.Models.Evento>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Eventos ";
 }
 
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
-</p> 
-
+</p>
 <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Organizer)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
@@ -26,13 +28,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Recommendation)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </th>
+        </th> 
         <th></th>
     </tr>
 
@@ -40,6 +36,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Organizer)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)
@@ -53,12 +52,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Recommendation)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RowVersion)
-        </td>
+        
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EventoId }) |
             @Html.ActionLink("Details", "Details", new { id=item.EventoId }) |

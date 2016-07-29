@@ -3,19 +3,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
-namespace AngularMVCAuthentication.Models
+namespace AngularMVCCustomAuthentication.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
-    { 
+    {
         public string HomeTown { get; set; }
-        public System.DateTime?  BirthDate { get; set; }
-         
+        public System.DateTime? BirthDate { get; set; }
         public virtual ICollection<Evento> Eventos { get; set; }
+
+        public virtual MyUserInfo MyUserInfo { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -24,6 +25,7 @@ namespace AngularMVCAuthentication.Models
             return userIdentity;
         }
     }
+
     public abstract class CModelBase
     {
         public bool IsDeleted { get; set; }
@@ -31,6 +33,13 @@ namespace AngularMVCAuthentication.Models
         // NOTE: The Timestamp attribute specifies that this column will be included in the Where clause of Update and Delete.
         [Timestamp]
         public byte[] RowVersion { get; set; }
+    }
+
+    public class MyUserInfo : CModelBase
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 
     public class Evento : CModelBase
@@ -61,15 +70,15 @@ namespace AngularMVCAuthentication.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
-           
         }
 
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-  
-        public System.Data.Entity.DbSet<Evento> Eventoes { get; set; }        
 
+        public System.Data.Entity.DbSet<Evento> Eventoes { get; set; }
+
+        public DbSet<MyUserInfo> MyUserInfo { get; set; }
     }
 }
