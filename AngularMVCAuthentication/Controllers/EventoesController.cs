@@ -7,7 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AngularMVCAuthentication.Models;
-using DataModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -16,14 +15,13 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class EventoesController : Controller
     {
-        private ApplicationDbContext dbAuthentication = new ApplicationDbContext();
-        private ModelContext dbEventos = new ModelContext();
+        private ModelContext dbAuthentication;
         private ApplicationUser currentUser;
         private UserManager<ApplicationUser> manager;
 
         public EventoesController()
         {
-            dbAuthentication = new ApplicationDbContext();
+            dbAuthentication = new ModelContext();
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbAuthentication));
             currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
 
@@ -32,7 +30,7 @@ namespace AngularMVCAuthentication.Controllers
         // GET: Eventoes
         public ActionResult Index()
         {
-               currentUser = manager.FindById(User.Identity.GetUserId());
+            currentUser = manager.FindById(User.Identity.GetUserId());
             return View(dbAuthentication.Eventoes.ToList());
         }
 
@@ -123,7 +121,7 @@ namespace AngularMVCAuthentication.Controllers
             }
             if (evento.Organizer != currentUser.UserName)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Only the Organizer can delete his event");
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Solo el organizador del Evento puede Borrarlo");
                 //return RedirectToAction("Index");
             }
             //return Json(new { status = "error", message = "You are not the Organizer" });

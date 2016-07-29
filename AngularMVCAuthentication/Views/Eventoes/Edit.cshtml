@@ -1,7 +1,7 @@
 ﻿@model AngularMVCAuthentication.Models.Evento
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar evento";
 }
 
 <h2>Edit</h2>
@@ -54,24 +54,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Recommendation, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Recommendation, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsDeleted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsDeleted)
-                    @Html.ValidationMessageFor(model => model.IsDeleted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RowVersion, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RowVersion, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RowVersion, "", new { @class = "text-danger" })
             </div>
         </div>
 

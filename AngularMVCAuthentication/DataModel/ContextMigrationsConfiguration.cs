@@ -7,18 +7,19 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 
-namespace AngularMVCAuthentication
+namespace AngularMVCAuthentication.DataModel
 {
 
 
-    public sealed class ApplicationDbContextConfiguration : DbMigrationsConfiguration<AngularMVCAuthentication.Models.ApplicationDbContext>
+    public sealed class ApplicationDbContextConfiguration : DbMigrationsConfiguration<ModelContext>
     {
         public ApplicationDbContextConfiguration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
         }
-        ApplicationUser AddUserAndRole(AngularMVCAuthentication.Models.ApplicationDbContext context)
+
+        ApplicationUser AddUserAndRole(ModelContext context)
         {
             IdentityResult ir;
             var rm = new RoleManager<IdentityRole>
@@ -42,7 +43,7 @@ namespace AngularMVCAuthentication
             return user;
         }
 
-        protected override void Seed(AngularMVCAuthentication.Models.ApplicationDbContext context)
+        protected override void Seed(ModelContext context)
         {
 
 

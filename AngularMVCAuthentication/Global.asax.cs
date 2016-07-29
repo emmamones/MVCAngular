@@ -1,5 +1,5 @@
-﻿using AngularMVCAuthentication.Models;
-using DataModel;
+﻿using AngularMVCAuthentication.DataModel;
+using AngularMVCAuthentication.Models; 
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,12 +23,13 @@ namespace AngularMVCAuthentication
 
             if (Debugger.IsAttached)
             {
-                InitDataBase.SetInitializer();
-                System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, ApplicationDbContextConfiguration>(true));
+               // InitDataBase.SetInitializer();
+                //System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, ApplicationDbContextConfiguration>(true));
+                System.Data.Entity.Database.SetInitializer<ModelContext>(new ContextDropConfiguration());
             }
             else
             {
-                System.Data.Entity.Database.SetInitializer<ApplicationDbContext>(null);
+                System.Data.Entity.Database.SetInitializer<ModelContext>(null);
             }
         }
     }

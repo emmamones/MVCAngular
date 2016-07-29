@@ -54,22 +54,5 @@ namespace AngularMVCAuthentication.Models
         public string Recommendation { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
-
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-           
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-  
-        public System.Data.Entity.DbSet<Evento> Eventoes { get; set; }        
-
-    }
+     
 }
