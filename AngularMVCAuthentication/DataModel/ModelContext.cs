@@ -12,6 +12,11 @@ namespace AngularMVCAuthentication
 
     public class ModelContext : IdentityDbContext<ApplicationUser>
     {
+        public ModelContext(string argConnectionString)
+           : base(argConnectionString, throwIfV1Schema: false)
+        {
+
+        }
         public ModelContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

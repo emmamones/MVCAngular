@@ -171,7 +171,11 @@
     <Compile Include="Controllers\EventoesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DataAccess\DataRepository.cs" />
+    <Compile Include="DataAccess\IDataRepository.cs" />
+    <Compile Include="DataModel\CModelBase.cs" />
     <Compile Include="DataModel\ContextMigrationsConfiguration.cs" />
+    <Compile Include="DataModel\CUserEntity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
