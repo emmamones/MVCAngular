@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using AngularMVCAuthentication.DataModel;
 
 namespace AngularMVCAuthentication.Models
 {
@@ -24,21 +25,11 @@ namespace AngularMVCAuthentication.Models
             return userIdentity;
         }
     }
-    public abstract class CModelBase
+    
+    public class Evento : CUserEntity
     {
-        public bool IsDeleted { get; set; }
-
-        // NOTE: The Timestamp attribute specifies that this column will be included in the Where clause of Update and Delete.
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
-    }
-
-    public class Evento : CModelBase
-    {
-        public int EventoId { get; set; }
         public string Title { get; set; }
-        public System.DateTime? Date { get; set; }
-
+        public System.DateTime? DateEvent { get; set; }
         public string Location { get; set; }
         public string URL { get; set; }
 

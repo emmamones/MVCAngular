@@ -6,34 +6,35 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using AngularMVCAuthentication;
 using AngularMVCAuthentication.Models;
-using AngularMVCAuthentication.DataAccess;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using AngularMVCAuthentication.DataAccess;
 
 namespace AngularMVCAuthentication.Controllers
 {
-    public class EventoesController : Controller
+    public class OtroINvalidEventoesController : Controller
     {
-        private IDataRepository _Repository = null;
+      //  private IDataRepository _Repository = null;
         private ModelContext dbAuthentication;
         private ApplicationUser currentUser;
         private UserManager<ApplicationUser> manager;
-        public EventoesController()
+
+        public OtroINvalidEventoesController()
         {
             dbAuthentication = new ModelContext();
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbAuthentication));
             currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            _Repository = new DataRepository();
+        //    _Repository = new DataRepository();
 
         }
 
         // GET: Eventoes
         public ActionResult Index()
         {
-            return View(_Repository.Read<Evento>().ToList());
+            currentUser = manager.FindById(User.Identity.GetUserId());
+            return View(dbAuthentication.Eventoes.ToList());
         }
 
         // GET: Eventoes/Details/5
@@ -43,7 +44,7 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = _Repository.Find<Evento>(id.Value);
+            Evento evento = dbAuthentication.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
@@ -64,12 +65,12 @@ namespace AngularMVCAuthentication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "canEdit")]
-        public ActionResult Create([Bind(Include = "Id,EventoId,Title,Date,Location,URL,Recommendation,Created,CreatedBy,Updated,UpdatedBy,RowVersion")] Evento evento)
+        public ActionResult Create([Bind(Include = "EventoId,Title,Date,Location,URL,Recommendation,IsDeleted,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                _Repository.Create(evento, "CAmaras");
-                _Repository.SaveChanges();
+                //_Repository.Create(evento,"Emmanuel");
+                //_Repository.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -84,7 +85,7 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = _Repository.Find<Evento>(id.Value);
+            Evento evento = dbAuthentication.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
@@ -97,13 +98,12 @@ namespace AngularMVCAuthentication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
-        public ActionResult Edit([Bind(Include = "Id,EventoId,Title,Date,Location,URL,Recommendation,Created,CreatedBy,Updated,UpdatedBy,RowVersion")] Evento evento)
+        public ActionResult Edit([Bind(Include = "EventoId,Title,Date,Location,URL,Recommendation,IsDeleted,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                _Repository.Update(evento, "editovato");
-                _Repository.SaveChanges();
+                dbAuthentication.Entry(evento).State = EntityState.Modified;
+                dbAuthentication.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(evento);
@@ -117,11 +117,18 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Evento evento = _Repository.Find<Evento>(id.Value);
+            Evento evento = dbAuthentication.Eventoes.Find(id);
             if (evento == null)
             {
                 return HttpNotFound();
             }
+            if (evento.Organizer != currentUser.UserName)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Solo el organizador del Evento puede Borrarlo");
+                //return RedirectToAction("Index");
+            }
+            //return Json(new { status = "error", message = "You are not the Organizer" });
+
             return View(evento);
         }
 
@@ -131,9 +138,9 @@ namespace AngularMVCAuthentication.Controllers
         [Authorize(Roles = "canEdit")]
         public ActionResult DeleteConfirmed(int id)
         {
-            Evento evento = _Repository.Find<Evento>(id);
-            _Repository.Delete(evento);
-            _Repository.SaveChanges();
+            Evento evento = dbAuthentication.Eventoes.Find(id);
+            dbAuthentication.Eventoes.Remove(evento);
+            dbAuthentication.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -141,7 +148,7 @@ namespace AngularMVCAuthentication.Controllers
         {
             if (disposing)
             {
-                _Repository.Dispose();
+                dbAuthentication.Dispose();
             }
             base.Dispose(disposing);
         }

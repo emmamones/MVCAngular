@@ -11,7 +11,7 @@ namespace AngularMVCAuthentication.DataModel
 
         [Display(Name = "Created At")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
         [Display(Name = "Updated At")]

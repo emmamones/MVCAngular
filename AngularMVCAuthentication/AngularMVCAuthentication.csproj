@@ -169,6 +169,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventoesController.cs" />
+    <Compile Include="Controllers\superInvalidEventoesController.cs" />
+    <Compile Include="Controllers\OtroINvalidEventoesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DataAccess\DataRepository.cs" />

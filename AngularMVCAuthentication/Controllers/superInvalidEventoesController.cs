@@ -8,20 +8,22 @@ using System.Web;
 using System.Web.Mvc;
 using AngularMVCAuthentication;
 using AngularMVCAuthentication.Models;
-using AngularMVCAuthentication.DataAccess;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using AngularMVCAuthentication.DataAccess;
 
 namespace AngularMVCAuthentication.Controllers
 {
-    public class EventoesController : Controller
+    public class superInvalidEventoesController : Controller
     {
-        private IDataRepository _Repository = null;
+
+         private IDataRepository _Repository = null;
         private ModelContext dbAuthentication;
         private ApplicationUser currentUser;
         private UserManager<ApplicationUser> manager;
-        public EventoesController()
+
+        public superInvalidEventoesController()
         {
             dbAuthentication = new ModelContext();
             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbAuthentication));
@@ -52,7 +54,6 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: Eventoes/Create
-        [Authorize(Roles = "canEdit")]
         public ActionResult Create()
         {
             return View();
@@ -63,12 +64,11 @@ namespace AngularMVCAuthentication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
         public ActionResult Create([Bind(Include = "Id,EventoId,Title,Date,Location,URL,Recommendation,Created,CreatedBy,Updated,UpdatedBy,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                _Repository.Create(evento, "CAmaras");
+                _Repository.Create(evento,"CAmaras");
                 _Repository.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -77,7 +77,6 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: Eventoes/Edit/5
-        [Authorize(Roles = "canEdit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,12 +96,11 @@ namespace AngularMVCAuthentication.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
         public ActionResult Edit([Bind(Include = "Id,EventoId,Title,Date,Location,URL,Recommendation,Created,CreatedBy,Updated,UpdatedBy,RowVersion")] Evento evento)
         {
             if (ModelState.IsValid)
             {
-                _Repository.Update(evento, "editovato");
+                _Repository.Update(evento,"editovato");
                 _Repository.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -110,7 +108,6 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         // GET: Eventoes/Delete/5
-        [Authorize(Roles = "canEdit")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -128,7 +125,6 @@ namespace AngularMVCAuthentication.Controllers
         // POST: Eventoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "canEdit")]
         public ActionResult DeleteConfirmed(int id)
         {
             Evento evento = _Repository.Find<Evento>(id);
