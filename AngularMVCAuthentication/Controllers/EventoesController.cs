@@ -17,17 +17,30 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class EventoesController : Controller
     {
-        private IDataRepository _Repository = null;
-        private ModelContext dbAuthentication;
+        static object _InitLock = new object();
+        private IDataRepository _Repository = null; 
         private ApplicationUser currentUser;
         private UserManager<ApplicationUser> manager;
+
+        public virtual IDataRepository Repository
+        {
+            get
+            {
+                lock (_InitLock)
+                {
+                    if (_Repository == null)
+                        _Repository = new DataRepository();
+                    return _Repository;
+                }
+            }
+        }
         public EventoesController()
         {
-            dbAuthentication = new ModelContext();
-            manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(dbAuthentication));
-            currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
             _Repository = new DataRepository();
-
+            var store = new UserStore<ApplicationUser>(Repository.GetContext());
+            store.AutoSaveChanges = false;
+            manager = new UserManager<ApplicationUser>(store);
+            currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
         }
 
         // GET: Eventoes
@@ -68,8 +81,19 @@ namespace AngularMVCAuthentication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _Repository.Create(evento, "CAmaras");
-                _Repository.SaveChanges();
+                 
+                var store = new UserStore<ApplicationUser>(Repository.GetContext()); 
+                manager = new UserManager<ApplicationUser>(store);
+                currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
+
+
+                evento.ApplicationUser= currentUser;
+                var context= System.Web.HttpContext.Current.GetOwinContext().Get<ModelContext>();
+
+                context.Eventoes.Add(evento);
+
+                context.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -102,7 +126,7 @@ namespace AngularMVCAuthentication.Controllers
         {
             if (ModelState.IsValid)
             {
-                _Repository.Update(evento, "editovato");
+                _Repository.Update(evento, currentUser.UserName);
                 _Repository.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -122,6 +146,13 @@ namespace AngularMVCAuthentication.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (evento.Organizer != currentUser.UserName)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Only the Organizer can delete his event");
+                //return RedirectToAction("Index");
+            }
+
             return View(evento);
         }
 

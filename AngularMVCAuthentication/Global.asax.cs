@@ -1,5 +1,7 @@
 ﻿using AngularMVCAuthentication.DataModel;
-using AngularMVCAuthentication.Models; 
+using AngularMVCAuthentication.Models;
+using Persistance;
+using Persistance.Core;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,7 +25,18 @@ namespace AngularMVCAuthentication
 
             if (Debugger.IsAttached)
             {
-               // InitDataBase.SetInitializer();
+                InitDataBase.SetInitializer();
+
+                //var contPersistance = InitDataBase.GetEvenRepository();
+
+                using (var uW = new UnitOfWork(new PersistanceContext()))
+                {
+
+                    var fisrtEvent = uW.Eventos.GetAll().FirstOrDefault();
+                    uW.Eventos.Remove(fisrtEvent);
+                    uW.Complete(); 
+
+                }
                 //System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, ApplicationDbContextConfiguration>(true));
                 System.Data.Entity.Database.SetInitializer<ModelContext>(new ContextDropConfiguration());
             }

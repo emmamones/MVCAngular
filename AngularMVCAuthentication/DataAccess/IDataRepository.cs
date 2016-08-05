@@ -1,6 +1,7 @@
 ﻿using AngularMVCAuthentication.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -10,6 +11,7 @@ namespace AngularMVCAuthentication.DataAccess
 {
     public interface IDataRepository : IDisposable
     {
+        DbContext GetContext();
         IQueryable Read(Type argEntityType);
         IQueryable<T> Read<T>() where T : CModelBase;
         T Find<T>(int id) where T : CModelBase;

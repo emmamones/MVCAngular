@@ -1,4 +1,5 @@
-﻿using AngularMVCAuthentication.DataModel;
+﻿
+using Persistance.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,15 +11,22 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace AngularMVCAuthentication.DataAccess
+namespace Persistance.DataAccess
 {
-    public class DataRepository : IDataRepository
+    public class DataRepository<T> : IRepository<T> where T : class
     {
-
-
-        public DataRepository()
+        protected DbContext _Context;
+        public Database Database
         {
-            _Context = new ModelContext();
+            get
+            {
+                return _Context.Database;
+            }
+        }
+
+        public DataRepository(DbContext argContext)
+        {
+            _Context = argContext;
         }
 
         public DbContext GetContext()
@@ -31,29 +39,14 @@ namespace AngularMVCAuthentication.DataAccess
             var sBuilder = new SqlConnectionStringBuilder(argDBConnectionString);
             sBuilder.MultipleActiveResultSets = true;
 
-            _Context = new ModelContext(sBuilder.ToString());
-        }
-
-        public Database Database
-        {
-            get
-            {
-                return Context.Database;
-            }
+            _Context = new PersistanceContext(sBuilder.ToString());
         }
 
 
-        private DbContext _Context;
-        public DbContext Context
-        {
-            get { return _Context; }
-
-        }
-
-        public string GetTableName<T>() where T : CModelBase
+        public string GetTableName()
         {
             string result = null;
-            var objectContext = ((IObjectContextAdapter)Context).ObjectContext;
+            var objectContext = ((IObjectContextAdapter)_Context).ObjectContext;
             string sql = objectContext.CreateObjectSet<T>().ToTraceString();
 
             var match = Regex.Match(sql, @"FROM\s+\[dbo\]\.\[(?<TableName>[^\]]+)\]", RegexOptions.Multiline);
@@ -68,78 +61,42 @@ namespace AngularMVCAuthentication.DataAccess
 
         public virtual IQueryable Read(Type argEntityType)
         {
-            return Context.Set(argEntityType);
+            return _Context.Set(argEntityType);
         }
-
-        public virtual IQueryable<T> Read<T>() where T : CModelBase
+         
+        public T Get(int argId)
         {
-            return Context.Set<T>();
+            return _Context.Set<T>().Find(argId);
         }
 
-        public T Find<T>(int id) where T : CModelBase
+        public  IEnumerable<T> GetAll()
         {
-            return Read<T>().SingleOrDefault(e => e.Id == id);
+            return _Context.Set<T>().ToList();
         }
 
-        public virtual void Create<T>(T entity, string userName) where T : CUserEntity
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-
-            entity.Created = DateTime.Now;
-            entity.CreatedBy = userName;
-
-            Context.Set<T>().Add(entity);
+            return _Context.Set<T>().Where(predicate);
         }
 
-        public virtual void Delete<T>(T entity) where T : CModelBase
+        public void Add(T entity, string userName) 
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            Context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+            //entity.Created = DateTime.Now;
+            //entity.CreatedBy = userName;
+
+            _Context.Set<T>().Add(entity);
         }
 
 
-        public void Remove<T>(T entity) where T : CModelBase
+        public void Remove(T entity) 
         {
             if (entity == null)
                 throw new ArgumentNullException("entity");
 
-            Context.Set<T>().Remove(entity);
-        }
-
-        public virtual void Update<T>(T entity, string userName) where T : CUserEntity
-        {
-            if (entity == null)
-                throw new ArgumentNullException("entity");
-
-            entity.Updated = DateTime.Now;
-            entity.UpdatedBy = userName;
-
-            var set = Context.Set<T>();
-            T attachedEntity = set.Find(entity.Id);  // You need to have access to key
-
-            if (attachedEntity != null)
-            {
-                entity.Created = attachedEntity.Created;
-                entity.CreatedBy = attachedEntity.CreatedBy;
-                var attachedEntry = Context.Entry(attachedEntity);
-                attachedEntry.CurrentValues.SetValues(entity);
-            }
-            else
-            {
-                Context.Entry(entity).State = System.Data.Entity.EntityState.Modified; // This should attach entity
-            }
-
-        }
-
-        public virtual void SaveChanges()
-        {
-
-
-            Context.SaveChanges();
-
+            _Context.Set<T>().Remove(entity);
         }
 
 
@@ -158,7 +115,7 @@ namespace AngularMVCAuthentication.DataAccess
                 if (disposing)
                 {
                     // Dispose managed resources.
-                    Context.Dispose();
+                    _Context.Dispose();
                 }
 
                 // Dispose unmanaged resources (nothing to do).
@@ -213,7 +170,7 @@ namespace AngularMVCAuthentication.DataAccess
 
 
 
-        public IEnumerable<T> GetFilteredElements<T, S>(Expression<Func<T, bool>> argFilter, int argPageIndex, int argPageCount, Expression<Func<T, S>> argOrderByExpression, bool argAscending) where T : CModelBase
+        public IEnumerable<T> GetFilteredElements<S>(Expression<Func<T, bool>> argFilter, int argPageIndex, int argPageCount, Expression<Func<T, S>> argOrderByExpression, bool argAscending) 
         {
             //checking query arguments
             if (argFilter == (Expression<Func<T, bool>>)null)
@@ -229,7 +186,7 @@ namespace AngularMVCAuthentication.DataAccess
                 throw new ArgumentNullException("orderByExpression");
 
 
-            var objectSet = Context.Set<T>();
+            var objectSet = _Context.Set<T>();
 
             return (argAscending)
                                 ?
@@ -248,7 +205,6 @@ namespace AngularMVCAuthentication.DataAccess
                                      .ToList();
         }
 
-
-
+      
     }
 }

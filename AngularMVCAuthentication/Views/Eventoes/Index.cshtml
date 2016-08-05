@@ -15,6 +15,9 @@
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Organizer)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.DateEvent)
         </th>
         <th>
@@ -38,9 +41,7 @@
         <th>
             @Html.DisplayNameFor(model => model.UpdatedBy)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RowVersion)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -48,6 +49,9 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Organizer)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateEvent)
@@ -73,9 +77,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.UpdatedBy)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RowVersion)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

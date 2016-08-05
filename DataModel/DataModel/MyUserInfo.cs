@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataModel
+namespace Persistance.DataModel
 {
-    public class MyUserInfo:CModelBase
-    {
-        public int Id { get; set; }
-
+    public class MyUserInfo: CUserEntity
+    {  
         public string UserName { get; set; }
 
         public string FirstName { get; set; }
@@ -18,6 +16,6 @@ namespace DataModel
         [NotMapped]
         public string  FullName { get { return FirstName +" " +LastName; } }
 
-        public virtual List<EventoExterno> Eventos { get; set; }
+        public virtual List<Evento> Eventos { get; set; }
     }
 }
