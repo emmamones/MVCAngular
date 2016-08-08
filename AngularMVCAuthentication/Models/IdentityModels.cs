@@ -15,8 +15,6 @@ namespace AngularMVCAuthentication.Models
     { 
         public string HomeTown { get; set; }
         public System.DateTime?  BirthDate { get; set; }
-         
-        public virtual ICollection<Evento> Eventos { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -25,25 +23,5 @@ namespace AngularMVCAuthentication.Models
             return userIdentity;
         }
     }
-    
-    public class Evento : CUserEntity
-    {
-        public string Title { get; set; }
-        public System.DateTime? DateEvent { get; set; }
-        public string Location { get; set; }
-        public string URL { get; set; }
 
-        [NotMapped]
-        public string Organizer
-        {
-            get
-            {
-                return ApplicationUser.UserName;
-            }
-        }
-
-        public string Recommendation { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
-    }
-     
 }

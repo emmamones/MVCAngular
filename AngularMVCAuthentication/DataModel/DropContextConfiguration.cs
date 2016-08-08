@@ -11,9 +11,9 @@ namespace AngularMVCAuthentication.DataModel
 {
 
 
-    public sealed class ContextDropConfiguration : DropCreateDatabaseAlways<ModelContext>
+    public sealed class DropContextConfiguration : DropCreateDatabaseIfModelChanges<ModelContext>
     {
-        public ContextDropConfiguration()
+        public DropContextConfiguration()
         { 
         }
         ApplicationUser AddUserAndRole(ModelContext context)
@@ -42,39 +42,7 @@ namespace AngularMVCAuthentication.DataModel
 
         protected override void Seed(ModelContext context)
         {
-
-
-
             var defaultUser = AddUserAndRole(context);
-
-            context.Eventoes.AddOrUpdate(p => p.Title,
-                  new Evento
-                  {
-                      Title = "Debra Garcia",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Thorsten Weinrich",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Yuhong Li",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Jon Orton",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Diliana Alexieva-Bosseva",
-                      ApplicationUser = defaultUser
-                  }
-                  ); 
-
         }
     }
 }

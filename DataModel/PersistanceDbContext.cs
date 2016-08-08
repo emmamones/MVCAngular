@@ -23,13 +23,11 @@ namespace Persistance
             //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, DataContextConfiguration>());
         }
 
-        public System.Data.Entity.DbSet<Evento> Evento { get; set; }
-
-
         public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
-
+        public System.Data.Entity.DbSet<Evento> Evento { get; set; }
         public System.Data.Entity.DbSet<Movie> Movie { get; set; }
 
+        public System.Data.Entity.DbSet<Persistance.DataModel.MembershipType> MembershipTypes { get; set; }
         public System.Data.Entity.DbSet<Persistance.DataModel.Customer> Customers { get; set; }
     }
 }

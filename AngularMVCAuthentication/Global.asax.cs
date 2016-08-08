@@ -17,7 +17,7 @@ namespace AngularMVCAuthentication
     public class MvcApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
-        {
+        { 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -25,15 +25,14 @@ namespace AngularMVCAuthentication
 
             if (Debugger.IsAttached)
             {
-                InitDataBase.SetInitializer(true);
                 Console.WriteLine("Debugger.IsAttached");
-                //System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, ApplicationDbContextConfiguration>(true));
-                System.Data.Entity.Database.SetInitializer<ModelContext>(new ContextDropConfiguration());
+                InitPersistanceDataBase.SetInitializer(true);
+                System.Data.Entity.Database.SetInitializer<ModelContext>(new DropContextConfiguration());
             }
             else
             {
-                InitDataBase.SetInitializer(false);
-                System.Data.Entity.Database.SetInitializer<ModelContext>(null);
+                InitPersistanceDataBase.SetInitializer(false);
+                System.Data.Entity.Database.SetInitializer<ModelContext>(null); 
             }
         }
     }

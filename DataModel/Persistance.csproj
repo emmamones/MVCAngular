@@ -64,17 +64,17 @@
     <Compile Include="DataModel\CModelBase.cs" />
     <Compile Include="DataModel\Customer.cs" />
     <Compile Include="DataModel\Movie.cs" />
+    <Compile Include="DataModel\MembershipType.cs" />
     <Compile Include="Repositories\MovieRepository.cs" />
     <Compile Include="Repositories\IMovieRepository.cs" />
-    <Compile Include="Seeds\DataContextMigrationConfiguration.cs" />
-    <Compile Include="Seeds\DataContextConfiguration.cs" />
+    <Compile Include="Seeds\MigrateContextConfiguration.cs" />
+    <Compile Include="Seeds\DropContextConfiguration.cs" />
     <Compile Include="DataModel\CUserEntity.cs" />
     <Compile Include="DataModel\Evento.cs" />
-    <Compile Include="DataModel\IdentityModels.cs" />
-    <Compile Include="PersistanceContext.cs" />
+    <Compile Include="PersistanceDbContext.cs" />
     <Compile Include="DataModel\MyUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InitDataBase.cs" />
+    <Compile Include="InitPersistanceDataBase.cs" />
     <Compile Include="Repositories\EventoRepository.cs" />
     <Compile Include="Repositories\IEventoRepository.cs" />
   </ItemGroup>

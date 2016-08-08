@@ -11,9 +11,9 @@ namespace AngularMVCAuthentication.DataModel
 {
 
 
-    public sealed class ApplicationDbContextConfiguration : DbMigrationsConfiguration<ModelContext>
+    public sealed class MigrateContextConfiguration : DbMigrationsConfiguration<ModelContext>
     {
-        public ApplicationDbContextConfiguration()
+        public MigrateContextConfiguration()
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
@@ -45,39 +45,7 @@ namespace AngularMVCAuthentication.DataModel
 
         protected override void Seed(ModelContext context)
         {
-
-
-
             var defaultUser = AddUserAndRole(context);
-
-            context.Eventoes.AddOrUpdate(p => p.Title,
-                  new Evento
-                  {
-                      Title = "Debra Garcia",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Thorsten Weinrich",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Yuhong Li",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Jon Orton",
-                      ApplicationUser = defaultUser
-                  },
-                  new Evento
-                  {
-                      Title = "Diliana Alexieva-Bosseva",
-                      ApplicationUser = defaultUser
-                  }
-                  ); 
-
         }
     }
 }

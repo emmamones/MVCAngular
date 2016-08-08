@@ -9,7 +9,6 @@ using System.Data.Entity;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Persistance.Models;
 
 namespace Persistance.DataModel
 { 
@@ -31,6 +30,7 @@ namespace Persistance.DataModel
 
         public string Recommendation { get; set; }
         public virtual MyUserInfo ApplicationUser { get; set; }
+
     }
 
 }

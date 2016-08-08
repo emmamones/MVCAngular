@@ -12,14 +12,14 @@ using System.Threading.Tasks;
 
 namespace Persistance
 {
-    public class InitDataBase
+    public class InitPersistanceDataBase
     {
         public static void SetInitializer(bool debug)
         {
             if (debug)
             {
                 Console.WriteLine("Database.SetInitializer(DataContextConfiguration)");               
-                System.Data.Entity.Database.SetInitializer<PersistanceContext>(new DataContextConfiguration());
+                System.Data.Entity.Database.SetInitializer<PersistanceContext>(new DropContextConfiguration());
             }
             else
             {

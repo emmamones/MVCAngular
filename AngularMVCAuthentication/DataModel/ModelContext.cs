@@ -28,7 +28,5 @@ namespace AngularMVCAuthentication
             return new ModelContext();
         }
 
-        public System.Data.Entity.DbSet<Evento> Eventoes { get; set; }
-
     }
 }
