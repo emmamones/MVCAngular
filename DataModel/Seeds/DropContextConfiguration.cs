@@ -18,7 +18,7 @@ namespace Persistance.Seeds
         {
             var user = new MyUserInfo()
             {
-                Id = 1, 
+                Id = 1,
                 Created = DateTime.Now,
                 CreatedBy = "seed",
                 UserName = "user1@contoso.com",
@@ -61,12 +61,19 @@ namespace Persistance.Seeds
 
 
 
-                context.MembershipTypes.AddOrUpdate(T => T.Id,
-                    new MembershipType { Id = 1, SignUpFee = 0, DurationInMonths = 0, DiscountRate = 0, Created = DateTime.Now, CreatedBy = "seed" },
-                    new MembershipType { Id = 2, SignUpFee = 30, DurationInMonths = 1, DiscountRate = 10, Created = DateTime.Now, CreatedBy = "seed" },
-                    new MembershipType { Id = 3, SignUpFee = 90, DurationInMonths = 3, DiscountRate = 15, Created = DateTime.Now, CreatedBy = "seed" },
-                    new MembershipType { Id = 4, SignUpFee = 300, DurationInMonths = 12, DiscountRate = 20, Created = DateTime.Now, CreatedBy = "seed" });
+                //context.MembershipTypes.AddOrUpdate(T => T.Id,
+                //    new MembershipType { Id = 1, SignUpFee = 0, DurationInMonths = 0, DiscountRate = 0, Created = DateTime.Now, CreatedBy = "seed" },
+                //    new MembershipType { Id = 2, SignUpFee = 30, DurationInMonths = 1, DiscountRate = 10, Created = DateTime.Now, CreatedBy = "seed" },
+                //    new MembershipType { Id = 3, SignUpFee = 90, DurationInMonths = 3, DiscountRate = 15, Created = DateTime.Now, CreatedBy = "seed" },
+                //    new MembershipType { Id = 4, SignUpFee = 300, DurationInMonths = 12, DiscountRate = 20, Created = DateTime.Now, CreatedBy = "seed" });
 
+
+                context.Customers.AddOrUpdate(T => T.Id,
+                       new Customer { Name = "Alberto", Id = 1, IsSubscribedToNewsLetter=false, MembershipType = new MembershipType { Id = 1, SignUpFee = 0, DurationInMonths = 0, DiscountRate = 0, Created = DateTime.Now, CreatedBy = "seed" } }
+                     , new Customer { Name = "Federico", Id = 2, IsSubscribedToNewsLetter = true, MembershipType = new MembershipType{ Id = 2, SignUpFee = 30, DurationInMonths = 1, DiscountRate = 10, Created = DateTime.Now, CreatedBy = "seed" } }
+                     , new Customer { Name = "Roberto", Id = 3, IsSubscribedToNewsLetter = true, MembershipType = new MembershipType { Id = 3, SignUpFee = 90, DurationInMonths = 3, DiscountRate = 15, Created = DateTime.Now, CreatedBy = "seed" } }
+                     , new Customer { Name = "Ismael", Id = 4, IsSubscribedToNewsLetter = true, MembershipType = new MembershipType { Id = 4, SignUpFee = 300, DurationInMonths = 12, DiscountRate = 20, Created = DateTime.Now, CreatedBy = "seed" } }
+                     );
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿
 using AngularMVCAuthentication.ViewModels;
+using System.Data.Entity;
 using Persistance;
 using Persistance.Core;
 using Persistance.DataModel;
@@ -13,6 +14,11 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class MoviesController : Controller
     {
+        private PersistanceContext _context;
+        public MoviesController()
+        {
+            _context = new PersistanceContext();
+        }
         // GET: Movies
         public ActionResult BestMovies()
         {
@@ -41,14 +47,7 @@ namespace AngularMVCAuthentication.Controllers
             //ViewData["Verga"] = peli;
             //ViewBag.Verga = peli;
 
-            var customers = new List<Customer>() {
-                new Customer() {  Name="Alberto",Id=1}
-            , new Customer() {  Name="Federico",Id=2}
-            ,  new Customer() {  Name="Roberto",Id=3}
-             ,  new Customer() {  Name="Ismael",Id=4}
-            };
-
-
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
             var viewModel = new RandomMovieVIewModel
             {

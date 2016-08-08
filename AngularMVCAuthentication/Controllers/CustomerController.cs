@@ -1,4 +1,6 @@
-﻿using Persistance.DataModel;
+﻿using Persistance;
+using Persistance.DataModel;
+using System.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,24 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class CustomerController : Controller
     {
+        private PersistanceContext _context;   
+        public CustomerController()
+        {
+            _context = new PersistanceContext();
+
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
+        public ActionResult Index()
+        {
+            var customers = _context.Customers.Include(c=>c.MembershipType).ToList();
+             
+            return View(customers);
+        }
         public ActionResult Details(int? Id)
         {
             Customer custDetail = null;
@@ -16,21 +36,12 @@ namespace AngularMVCAuthentication.Controllers
             if (!Id.HasValue)
                 return View(custDetail);
 
-
-
-            var customers = new List<Customer>() {
-                new Customer() {  Name="Alberto",Id=1}
-            , new Customer() {  Name="Federico",Id=2}
-            ,  new Customer() {  Name="Roberto",Id=3}
-             ,  new Customer() {  Name="Ismael",Id=4}
-            };
-
+            var customers = _context.Customers.ToList();
 
             if (Id.Value > customers.Count | Id.Value < 0)
                 return View(custDetail);
 
-
-            custDetail = customers.Where(c => c.Id == Id.Value).FirstOrDefault();
+              custDetail = _context.Customers.SingleOrDefault(x => x.Id == Id);
 
             return View(custDetail);
         }
