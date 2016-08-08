@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Persistance.Repositories;
+using DataModel.Repositories;
 
 namespace Persistance.Core
 {
@@ -16,9 +17,11 @@ namespace Persistance.Core
             _context = argContext;
             //here i could initializes all repositories with the same context.
             Eventos = new EventoRepository(_context);
+            Movies = new MovieRepository(_context);
 
         }
         public IEventoRepository Eventos  {     get;     private set; }
+        public IMovieRepository Movies { get; private set; }
 
         public int Complete()
         {

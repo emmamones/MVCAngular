@@ -25,23 +25,14 @@ namespace AngularMVCAuthentication
 
             if (Debugger.IsAttached)
             {
-                InitDataBase.SetInitializer();
-
-                //var contPersistance = InitDataBase.GetEvenRepository();
-
-                using (var uW = new UnitOfWork(new PersistanceContext()))
-                {
-
-                    var fisrtEvent = uW.Eventos.GetAll().FirstOrDefault();
-                    uW.Eventos.Remove(fisrtEvent);
-                    uW.Complete(); 
-
-                }
+                InitDataBase.SetInitializer(true);
+                Console.WriteLine("Debugger.IsAttached");
                 //System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, ApplicationDbContextConfiguration>(true));
                 System.Data.Entity.Database.SetInitializer<ModelContext>(new ContextDropConfiguration());
             }
             else
             {
+                InitDataBase.SetInitializer(false);
                 System.Data.Entity.Database.SetInitializer<ModelContext>(null);
             }
         }

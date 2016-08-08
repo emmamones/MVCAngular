@@ -14,11 +14,28 @@ namespace Persistance
 {
     public class InitDataBase
     {
-        public static void SetInitializer()
+        public static void SetInitializer(bool debug)
         {
-            Debug.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
-            //System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, DataContextConfiguration>(true));           
-            System.Data.Entity.Database.SetInitializer<PersistanceContext>(new DataContextConfiguration());
+            if (debug)
+            {
+                Console.WriteLine("Database.SetInitializer(DataContextConfiguration)");               
+                System.Data.Entity.Database.SetInitializer<PersistanceContext>(new DataContextConfiguration());
+            }
+            else
+            {
+                try
+                {
+                    Console.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
+                    System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, DataContextMigrationConfiguration>(true));
+                }
+                catch (Exception ex)
+                {
+
+                    Console.WriteLine(ex.ToString());
+                }
+               
+            }
+          
 
         }
 

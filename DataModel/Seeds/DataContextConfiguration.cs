@@ -1,4 +1,5 @@
 ﻿using Persistance.DataModel;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 
@@ -62,6 +63,12 @@ namespace Persistance.Seeds
                           ApplicationUser = defaultUser
                       }
                       );
+
+                context.Movie.AddOrUpdate(m => m.Name,
+                    new Movie { Name="Shrek!", DirectorName="Spike Lee" , ReleaseDate=DateTime.Now.AddDays(-15)},
+                    new Movie { Name="Tarzan", DirectorName = "Spike Lee" , ReleaseDate = DateTime.Now.AddDays(-10) },
+                    new Movie { Name="Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-5) },
+                    new Movie { Name="Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1) });
             }
         }
     }

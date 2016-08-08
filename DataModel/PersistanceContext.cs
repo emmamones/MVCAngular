@@ -27,5 +27,9 @@ namespace Persistance
 
 
         public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
+
+        public System.Data.Entity.DbSet<Movie> Movie { get; set; }
+
+        public System.Data.Entity.DbSet<Persistance.DataModel.Customer> Customers { get; set; }
     }
 }

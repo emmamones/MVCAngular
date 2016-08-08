@@ -1,4 +1,5 @@
-﻿using Persistance.Repositories;
+﻿using DataModel.Repositories;
+using Persistance.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Persistance.Core
     public interface IUnitOfWork:IDisposable
     {
         IEventoRepository Eventos { get; }
+
+        IMovieRepository Movies { get; }
         int Complete();
     }
 }
