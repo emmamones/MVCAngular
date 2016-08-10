@@ -7,8 +7,8 @@
     <ProjectGuid>{4B9C8FA0-FB94-4C0C-A276-3346BE69BCA0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataModel</RootNamespace>
-    <AssemblyName>DataModel</AssemblyName>
+    <RootNamespace>Persistance</RootNamespace>
+    <AssemblyName>Persistance</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,11 +63,17 @@
     <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="DataModel\CModelBase.cs" />
     <Compile Include="DataModel\Customer.cs" />
+    <Compile Include="DataModel\Genre.cs" />
     <Compile Include="DataModel\Movie.cs" />
     <Compile Include="DataModel\MembershipType.cs" />
+    <Compile Include="Migrations\201608101700435_InitialMigration.cs" />
+    <Compile Include="Migrations\201608101700435_InitialMigration.Designer.cs">
+      <DependentUpon>201608101700435_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ManualMigrateContextConfiguration.cs" />
     <Compile Include="Repositories\MovieRepository.cs" />
     <Compile Include="Repositories\IMovieRepository.cs" />
-    <Compile Include="Seeds\MigrateContextConfiguration.cs" />
+    <Compile Include="Seeds\AutomaticMigrateContextConfiguration.cs" />
     <Compile Include="Seeds\DropContextConfiguration.cs" />
     <Compile Include="DataModel\CUserEntity.cs" />
     <Compile Include="DataModel\Evento.cs" />
@@ -81,6 +87,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608101700435_InitialMigration.resx">
+      <DependentUpon>201608101700435_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

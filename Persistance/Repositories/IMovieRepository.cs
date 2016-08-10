@@ -14,5 +14,7 @@ namespace DataModel.Repositories
 
         IEnumerable<Movie> GetAllMoviesBy(string argDirectorName);
 
+        IEnumerable<Movie> GetAllMoviesWithGender(int count);
+
     }
 }

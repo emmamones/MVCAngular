@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace Persistance.Repositories
 {
@@ -17,12 +18,17 @@ namespace Persistance.Repositories
          
         public IEnumerable<Movie> GetlastMovies(int count)
         {
-           return MyContext.Movie.OrderByDescending(c => c.ReleaseDate).Take(count).ToList();
+           return MyContext.Movies.OrderByDescending(c => c.ReleaseDate).Take(count).ToList();
         }
 
         public IEnumerable<Movie> GetAllMoviesBy(string argDirectorName)
         {
-            return MyContext.Movie.Where(m => m.DirectorName.Equals(argDirectorName)).ToList();
+            return MyContext.Movies.Where(m => m.DirectorName.Equals(argDirectorName)).ToList();
+        }
+
+        public IEnumerable<Movie> GetAllMoviesWithGender(int count)
+        {
+            return MyContext.Movies.Include(m=>m.Genre).Take(count).ToList();
         }
 
         public PersistanceContext MyContext {

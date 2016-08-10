@@ -1,14 +1,14 @@
 ﻿
 using AngularMVCAuthentication.ViewModels;
 using System.Data.Entity;
-using Persistance;
-using Persistance.Core;
-using Persistance.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Persistance.Core;
+using Persistance;
+using Persistance.DataModel;
 
 namespace AngularMVCAuthentication.Controllers
 {
@@ -33,12 +33,35 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         [Route("movies")]
-        public ActionResult Random()
+        public ActionResult Index(int? pageIndex)
+        {
+            if (!pageIndex.HasValue)
+                pageIndex = 1;
+             
+
+            List<Movie> pelis = null;
+            using (var uW = new UnitOfWork(new PersistanceContext()))
+            {
+                pelis = uW.Movies.GetAllMoviesWithGender(pageIndex.Value).ToList();
+            }
+            
+           
+            return View(pelis);
+        }
+
+        [Route("movies/details/{id}")]
+        public ActionResult Details(int? Id)
         {
             Movie peli = null;
+            var viewModel = new RandomMovieVIewModel();
+
+            if (!Id.HasValue)
+                return View(viewModel);
+
+
             using (var uW = new UnitOfWork(new PersistanceContext()))
-            { 
-                peli = uW.Movies.GetlastMovies(5).FirstOrDefault(); 
+            {
+                peli = uW.Movies.Get(Id.Value);
             }
             //  return View(peli);
             // return HttpNotFound("wee");
@@ -46,19 +69,19 @@ namespace AngularMVCAuthentication.Controllers
             //   return RedirectToAction("Index", "Home", new { page = 1, sortBy = "Name" });
             //ViewData["Verga"] = peli;
             //ViewBag.Verga = peli;
+            // return Content($"pageIndex={pageIndex.Value }, sortBy = {sortBy}");
+            List<Customer> customers = null;
+            customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            var viewModel = new RandomMovieVIewModel
+            viewModel = new RandomMovieVIewModel
             {
                 Movie = peli,
                 Customers = customers
-        
+
             };
             return View(viewModel);
         }
 
-       
 
         public ActionResult Edit(int? Id)
         {
@@ -68,18 +91,6 @@ namespace AngularMVCAuthentication.Controllers
             return Content($"id={Id.Value }");
         }
 
-        public ActionResult Index(int? pageIndex, string sortBy)
-        {
-            if (!pageIndex.HasValue)
-                pageIndex = 1;
-
-            if ( string.IsNullOrEmpty(sortBy))
-                sortBy = "Name";
-
-            //par1\ameter binding
-            return Content($"pageIndex={pageIndex.Value }, sortBy = {sortBy}");
-
-        }
 
         [Route("movies/released/{year}/{month:regex(\\d{2}):range(1,12)}")]
         public ActionResult ByReleaseDate(int? year, int? month)
@@ -94,7 +105,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
 
-       
+
 
     }
 }

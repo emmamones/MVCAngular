@@ -10,7 +10,7 @@
 @if (Model==null)
 {
     <p>The Customer Doesnt Exist</p>
-    @Html.ActionLink("Back to List", "Random", "Movies", null, null)
+    @Html.ActionLink("Back to List", "Index", "Movies", null, null)
 }
 else
 {
@@ -26,13 +26,30 @@ else
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
-
+            @if (Model.BirthDate != null)
+            {
             <dt>
-                @Html.DisplayNameFor(model => model.Created)
+                @Html.DisplayNameFor(model => model.BirthDate )
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Created)
+                @Html.DisplayFor(model => model.BirthDate)
+            </dd>
+
+            }
+            <dt>
+                @Html.DisplayNameFor(model => model.IsSubscribedToNewsLetter)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsSubscribedToNewsLetter)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MembershipType.Name )
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MembershipType.Name)
             </dd>
 
             <dt>
@@ -71,7 +88,7 @@ else
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List","Random","Movies", null,null)
+        @Html.ActionLink("Back to List","Index")
     </p>
 
 }

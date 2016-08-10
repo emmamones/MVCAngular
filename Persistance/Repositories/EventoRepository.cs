@@ -15,12 +15,12 @@ namespace Persistance.Repositories
         }
         public IEnumerable<Evento> GetlastEvents(int count)
         {           
-          return MyContext.Evento.OrderByDescending(c => c.DateEvent).Take(count).ToList();
+          return MyContext.Eventos.OrderByDescending(c => c.DateEvent).Take(count).ToList();
         }
 
         public IEnumerable<Evento> GetAllEventsBy(string argUser)
         {
-            return MyContext.Evento.Where(c => c.ApplicationUser.UserName.Equals(argUser)).ToList();
+            return MyContext.Eventos.Where(c => c.ApplicationUser.UserName.Equals(argUser)).ToList();
         }
 
         public PersistanceContext MyContext {

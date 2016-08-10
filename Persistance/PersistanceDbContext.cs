@@ -10,7 +10,7 @@ namespace Persistance
 {
     public class PersistanceContext:DbContext
     {
-        public const string _DatabaseName = "AngularMVC";
+        public const string _DatabaseName = "AngularMVCJourny";
 
         public PersistanceContext(string argConnectionString) : base(argConnectionString)
         {
@@ -23,11 +23,16 @@ namespace Persistance
             //    Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, DataContextConfiguration>());
         }
 
-        public System.Data.Entity.DbSet<MyUserInfo> MyUserInfo { get; set; }
-        public System.Data.Entity.DbSet<Evento> Evento { get; set; }
-        public System.Data.Entity.DbSet<Movie> Movie { get; set; }
+        public System.Data.Entity.DbSet<MyUserInfo> MyUserInfos { get; set; }
+        public System.Data.Entity.DbSet<Evento> Eventos { get; set; }
+
+
+        public System.Data.Entity.DbSet<Persistance.DataModel.Customer> Customers { get; set; }
+        public System.Data.Entity.DbSet<Persistance.DataModel.Movie> Movies { get; set; }
 
         public System.Data.Entity.DbSet<Persistance.DataModel.MembershipType> MembershipTypes { get; set; }
-        public System.Data.Entity.DbSet<Persistance.DataModel.Customer> Customers { get; set; }
+       
+        public System.Data.Entity.DbSet<Persistance.DataModel.Genre> Genres { get; set; }
+         
     }
 }

@@ -25,6 +25,8 @@ namespace AngularMVCAuthentication.Controllers
 
         public ActionResult Index()
         {
+            //context.Customers deffered execution this will not execute till the iteration in the view its executed.
+            
             var customers = _context.Customers.Include(c=>c.MembershipType).ToList();
              
             return View(customers);
@@ -41,7 +43,7 @@ namespace AngularMVCAuthentication.Controllers
             if (Id.Value > customers.Count | Id.Value < 0)
                 return View(custDetail);
 
-              custDetail = _context.Customers.SingleOrDefault(x => x.Id == Id);
+             custDetail = _context.Customers.Include(c=>c.MembershipType).SingleOrDefault(x => x.Id == Id);
 
             return View(custDetail);
         }

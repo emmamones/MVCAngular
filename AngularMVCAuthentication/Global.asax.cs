@@ -26,12 +26,12 @@ namespace AngularMVCAuthentication
             if (Debugger.IsAttached)
             {
                 Console.WriteLine("Debugger.IsAttached");
-                InitPersistanceDataBase.SetInitializer(true);
+                InitPersistanceDataBase.SetInitializer(1);
                 System.Data.Entity.Database.SetInitializer<ModelContext>(new DropContextConfiguration());
             }
             else
-            {
-                InitPersistanceDataBase.SetInitializer(false);
+            { 
+                InitPersistanceDataBase.SetInitializer(2);
                 System.Data.Entity.Database.SetInitializer<ModelContext>(null); 
             }
         }
