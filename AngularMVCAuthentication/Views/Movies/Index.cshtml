@@ -50,7 +50,7 @@
 
     <div ng-controller="MoviesController">
         <p>Genres:</p>
-        <select ng-model="optGenre" ng-change="GetMoviesByGenre(optGenre)" ng-options="genre.Id as genre.Name for genre in modelGenre"></select>
+        <select ng-model="optGenre" ng-change="GetMoviesByGenre(optGenre)" ng-options="genre.Id as genre.Name for genre in modelGenres"></select>
         {{optGenre}}
 
         <select ng-model="optMovie" ng-options="movie.Id as movie.Name for movie in modelMovies"></select>
