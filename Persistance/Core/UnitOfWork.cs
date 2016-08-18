@@ -18,10 +18,13 @@ namespace Persistance.Core
             //here i could initializes all repositories with the same context.
             Eventos = new EventoRepository(_context);
             Movies = new MovieRepository(_context);
+            Genres = new GenreRepository(_context);
 
         }
         public IEventoRepository Eventos  {     get;     private set; }
         public IMovieRepository Movies { get; private set; }
+
+        public IGenreRepository Genres { get; private set; }
 
         public int Complete()
         {
