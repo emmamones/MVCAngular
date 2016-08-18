@@ -26,11 +26,14 @@ namespace AngularMVCAuthentication.Controllers
         public ActionResult Index()
         {
             //context.Customers deffered execution this will not execute till the iteration in the view its executed.
-            
-            var customers = _context.Customers.Include(c=>c.MembershipType).ToList();
-             
+
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
+
             return View(customers);
         }
+
+         
+     
         public ActionResult Details(int? Id)
         {
             Customer custDetail = null;

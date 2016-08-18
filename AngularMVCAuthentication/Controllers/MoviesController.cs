@@ -19,17 +19,27 @@ namespace AngularMVCAuthentication.Controllers
         {
             _context = new PersistanceContext();
         }
-        // GET: Movies
-        public ActionResult BestMovies()
+       
+
+        public ActionResult Genres()
         {
-            List<Movie> pelis = new List<Movie>();
+            List<Genre> genres = _context.Genres.ToList();
+
+
+            return Json(genres, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ByGenre(int id)
+        {
+            if (id==0)
+                id = 1;
+            List<Movie> pelis = null;
             using (var uW = new UnitOfWork(new PersistanceContext()))
             {
-
-                pelis = uW.Movies.GetlastMovies(5).ToList();
+                pelis = uW.Movies.ByGenre(id).ToList();
             }
 
-            return View(pelis);
+
+            return Json(pelis, JsonRequestBehavior.AllowGet);
         }
 
         [Route("movies")]

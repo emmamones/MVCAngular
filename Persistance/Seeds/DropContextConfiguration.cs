@@ -66,7 +66,7 @@ namespace Persistance.Seeds
 
                 context.Movies.AddOrUpdate(m => m.Name,
                        new Movie { Id = 1, Name = "Shrek!", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
-                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 2) },
+                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Alber J S", ReleaseDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
                        new Movie { Id = 3, Name = "Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-5), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 3) },
                        new Movie { Id = 4, Name = "Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 4) });
     

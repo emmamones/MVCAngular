@@ -12,7 +12,7 @@ namespace DataModel.Repositories
     {
         IEnumerable<Movie> GetlastMovies(int count);
 
-        IEnumerable<Movie> GetAllMoviesBy(string argDirectorName);
+        IEnumerable<Movie> ByGenre(int id);
 
         IEnumerable<Movie> GetAllMoviesWithGender(int count);
 

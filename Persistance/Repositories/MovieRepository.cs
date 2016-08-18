@@ -21,9 +21,9 @@ namespace Persistance.Repositories
            return MyContext.Movies.OrderByDescending(c => c.ReleaseDate).Take(count).ToList();
         }
 
-        public IEnumerable<Movie> GetAllMoviesBy(string argDirectorName)
+        public IEnumerable<Movie> ByGenre(int id)
         {
-            return MyContext.Movies.Where(m => m.DirectorName.Equals(argDirectorName)).ToList();
+            return MyContext.Movies.Include(m => m.Genre).Where(m => m.GenreId.Equals(id)).ToList();
         }
 
         public IEnumerable<Movie> GetAllMoviesWithGender(int count)

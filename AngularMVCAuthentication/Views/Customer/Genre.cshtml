@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<input type="radio" ng-model="G" value="M" />M
+<input type="radio" ng-model="G" value="F" />F
+You Have Selected:{{G}}
+
+<input type="checkbox" ng-true-value="'OK'" ng-false-value="'No'" ng-model="CK" /> 
+I Agree...{{CK}}
+
+
+
+@section scripts{
+   
+}

@@ -19,8 +19,7 @@ namespace AngularMVCAuthentication
                 controller = "Home",
                 action = "People"
             });
-
-
+ 
             routes.MapMvcAttributeRoutes();
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
