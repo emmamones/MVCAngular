@@ -29,14 +29,12 @@ namespace Persistance
                     try
                     {
                         Console.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
-                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, AutomaticMigrateContextConfiguration>(true));
-
+                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, AutomaticMigrateContextConfiguration>(true)); 
                     }
                     catch (Exception ex)
-                    {
-
+                    { 
                         Console.WriteLine(ex.ToString());
-                    }
+                    } 
 
                     break;
 
@@ -45,11 +43,9 @@ namespace Persistance
                     {
                         Console.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
                         System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, ManualMigrateContextConfiguration>(true));
-
                     }
                     catch (Exception ex)
-                    {
-
+                    { 
                         Console.WriteLine(ex.ToString());
                     }
                     break;

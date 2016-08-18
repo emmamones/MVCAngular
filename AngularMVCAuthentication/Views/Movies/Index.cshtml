@@ -4,14 +4,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
- 
+
 
 <h2>Index</h2>
 
-<p>
+<p> 
     @Html.ActionLink("Create New", "New")
 </p>
-<table class="table">
+@*
+    <table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -41,32 +42,36 @@
     }
 
 </table>
+    *@
 
 <div ng-controller="GenreController">
 
-    <button type="button" ng-click="GetGenres()">show json</button>
+    @*<button type="button" ng-click="GetGenres()">show json</button>*@
 
     <div ng-controller="MoviesController">
-
+        <p>Genres:</p>
         <select ng-model="optGenre" ng-change="GetMoviesByGenre(optGenre)" ng-options="genre.Id as genre.Name for genre in modelGenre"></select>
         {{optGenre}}
 
-        <select ng-model="optMovie" ng-options="movie.Id as movie.Name for movie in modelMovie"></select>
+        <select ng-model="optMovie" ng-options="movie.Id as movie.Name for movie in modelMovies"></select>
 
         <hr />
         <input type="text" ng-model="search" value="" />
         <table class="table table-striped table-hover">
             <tr>
-                <td ng-click="Sort('Name')">Name</td>
-                <td>ReleaseDate</td>
-                <td>ArrivalDate</td>
-                <td ng-click="Sort('DirectorName')">DirectorName</td>
-                <td>InStock</td>
-                <td>Genre</td>
+                <th ng-click="Sort('Name')">Name</th>
+                <th>ReleaseDate</th>
+                <th>ArrivalDate</th>
+                <th ng-click="Sort('DirectorName')">DirectorName</th>
+                <th>InStock</th>
+                <th>Genre</th>
+                <th> </th>
             </tr>
-            <tr ng-repeat="movie in modelMovie | filter:search | orderBy:key:AscOrDesc">
-                <td>{{movie.Name | uppercase}}</td>
-                <td> 
+            <tr ng-repeat="movie in modelMovies | filter:search | orderBy:key:AscOrDesc">
+                <td>
+                    <a ng-href="@Url.Content("~/Movies/Edit/"){{movie.Id}}">{{movie.Name}} </a>
+                </td>
+                <td>
                     <div class="control-group input-append">
                         <input type="text" ng-model="movie.ReleaseDate" data-date-format="dd/mm/yyyy" bs-datepicker>
                         <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
@@ -75,8 +80,11 @@
                 <td>{{movie.ArrivalDate}}</td>
                 <td>{{movie.DirectorName}}</td>
                 <td><input type="text" ng-model="movie.InStock" /></td>
-                <td><select ng-model="movie.GenreId"  ng-options="genre.Id as genre.Name for genre in modelGenre"></select></td>
-
+                <td><select ng-model="movie.GenreId" ng-options="genre.Id as genre.Name for genre in modelGenre"></select></td>
+                <td>  
+                    <a ng-href="@Url.Content("~/Movies/Details/"){{movie.Id}}">Details </a>|
+                    <a ng-href="@Url.Content("~/Movies/Delete/"){{movie.Id}}">Delete</a>
+                </td>
             </tr>
 
         </table>
@@ -86,5 +94,5 @@
 
 </div>
 @section scripts{
- 
+
 }

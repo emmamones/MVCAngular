@@ -19,18 +19,22 @@ namespace AngularMVCAuthentication.Controllers
         {
             _context = new PersistanceContext();
         }
-       
+
 
         public ActionResult Genres()
-        {
-            List<Genre> genres = _context.Genres.ToList();
+        { 
+            List<Genre> genres = null;
+            using (var uW = new UnitOfWork(new PersistanceContext()))
+            {
+                genres = uW.Genres.GetAll().ToList();
+            }
 
 
             return Json(genres, JsonRequestBehavior.AllowGet);
         }
         public ActionResult ByGenre(int id)
         {
-            if (id==0)
+            if (id == 0)
                 id = 1;
             List<Movie> pelis = null;
             using (var uW = new UnitOfWork(new PersistanceContext()))
@@ -39,7 +43,7 @@ namespace AngularMVCAuthentication.Controllers
             }
 
 
-            return View(pelis);
+            return Json(pelis, JsonRequestBehavior.AllowGet);
         }
 
         [Route("movies")]
@@ -107,12 +111,25 @@ namespace AngularMVCAuthentication.Controllers
             };
             return View("MoviesForm", viewModelMovies);
         }
-        public ActionResult Edit(int? Id)
+        public ActionResult Edit(int Id)
         {
-            //parameter binding
-            //calling this Edit/1 works because The default routing its set to this Id Parameter name
+            var movie = _context.Movies.SingleOrDefault(c => c.Id == Id);
+            if (movie == null)
+                return HttpNotFound();
 
-            return Content($"id={Id.Value }");
+            var vm = new MovieFormViewModel()
+            {
+                Id = movie.Id,
+                Name = movie.Name,
+                ReleaseDate = movie.ReleaseDate,
+                ArrivalDate = movie.ArrivalDate,
+                DirectorName = movie.DirectorName,
+                InStock = movie.InStock,
+                GenreId = movie.GenreId,
+                Genres  = _context.Genres.ToList()
+            };
+
+            return View("MoviesForm", vm);
         }
 
         [HttpPost]
@@ -154,7 +171,7 @@ namespace AngularMVCAuthentication.Controllers
                 {
                     currentMovie = uW.Movies.Get(vmModel.Id);
 
-                    if (currentMovie==null)
+                    if (currentMovie == null)
                         return View("MoviesForm", vmModel);
 
                     currentMovie.Name = vmModel.Name;
@@ -164,8 +181,8 @@ namespace AngularMVCAuthentication.Controllers
                     currentMovie.InStock = vmModel.InStock;
                     currentMovie.GenreId = vmModel.GenreId;
                     currentMovie.Updated = DateTime.Now;
-                    currentMovie.UpdatedBy = "Em"; 
-                    
+                    currentMovie.UpdatedBy = "Em";
+
                     uW.Complete();
                 }
 

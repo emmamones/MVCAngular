@@ -65,10 +65,10 @@ namespace Persistance.Seeds
                 genres.ForEach(s => context.Genres.AddOrUpdate(p => p.Id, s));
 
                 context.Movies.AddOrUpdate(m => m.Name,
-                       new Movie { Id = 1, Name = "Shrek!", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
-                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Alber J S", ReleaseDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
-                       new Movie { Id = 3, Name = "Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-5), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 3) },
-                       new Movie { Id = 4, Name = "Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 4) });
+                       new Movie { Id = 1, Name = "Shrek!", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-20), ArrivalDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, GenreId =  1 },
+                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Alber J S", ReleaseDate = DateTime.Now.AddDays(-20), ArrivalDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", InStock = 4, GenreId = 1 },
+                       new Movie { Id = 3, Name = "Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-15), ArrivalDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", InStock = 2, GenreId = 3 },
+                       new Movie { Id = 4, Name = "Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1), ArrivalDate = DateTime.Now, Created = DateTime.Now, CreatedBy = "seed", InStock = 0, GenreId = 4 });
     
 
                 var memberships = new List<MembershipType> {
@@ -82,10 +82,10 @@ namespace Persistance.Seeds
 
 
                 context.Customers.AddOrUpdate(T => T.Id,
-                           new Customer { Name = "Alberto", Id = 1, BirthDate = Convert.ToDateTime("01/01/1984"), IsSubscribedToNewsLetter = false, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 1) }
-                         , new Customer { Name = "Federico", Id = 2, BirthDate = Convert.ToDateTime("01/01/1986 "), IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 2) }
-                         , new Customer { Name = "Roberto", Id = 3, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 3) }
-                         , new Customer { Name = "Ismael", Id = 4, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 4) }
+                           new Customer { Name = "Alberto", Id = 1, BirthDate = Convert.ToDateTime("01/01/1984"), IsSubscribedToNewsLetter = false, Created = DateTime.Now, CreatedBy = "seed", MembershipTypeId = 1}
+                         , new Customer { Name = "Federico", Id = 2, BirthDate = Convert.ToDateTime("01/01/1986 "), IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipTypeId = 2}
+                         , new Customer { Name = "Roberto", Id = 3, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipTypeId = 3 }
+                         , new Customer { Name = "Ismael", Id = 4, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipTypeId = 4 }
                          );
 
             }

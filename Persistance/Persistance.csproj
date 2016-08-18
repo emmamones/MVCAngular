@@ -66,6 +66,10 @@
     <Compile Include="DataModel\Genre.cs" />
     <Compile Include="DataModel\Movie.cs" />
     <Compile Include="DataModel\MembershipType.cs" />
+    <Compile Include="Migrations\201608181334400_InitialMIgration.cs" />
+    <Compile Include="Migrations\201608181334400_InitialMIgration.Designer.cs">
+      <DependentUpon>201608181334400_InitialMIgration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ManualMigrateContextConfiguration.cs" />
     <Compile Include="Repositories\IGenreRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
@@ -85,6 +89,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608181334400_InitialMIgration.resx">
+      <DependentUpon>201608181334400_InitialMIgration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

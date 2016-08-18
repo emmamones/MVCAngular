@@ -28,7 +28,17 @@ namespace Persistance.Repositories
 
         public IEnumerable<Movie> GetAllMoviesWithGender(int count)
         {
-            return MyContext.Movies.Include(m=>m.Genre).Take(count).ToList();
+            try
+            {
+
+              return  MyContext.Movies.Include(m => m.Genre).Take(count).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
         }
 
         public PersistanceContext MyContext {

@@ -18,23 +18,11 @@ namespace AngularMVCAuthentication.Controllers
             _context = new PersistanceContext();
 
         }
-
         protected override void Dispose(bool disposing)
         {
             _context.Dispose();
         }
 
-        public ActionResult Index()
-        {
-            //context.Customers deffered execution this will not execute till the iteration in the view its executed.
-
-            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
-
-            return View(customers);
-        }
-
-         
-     
         public ActionResult Details(int? Id)
         {
             Customer custDetail = null;
@@ -52,6 +40,26 @@ namespace AngularMVCAuthentication.Controllers
             return View(custDetail);
         }
 
+      
+        public ActionResult Index()
+        {
+            //context.Customers deffered execution this will not execute till the iteration in the view its executed.
+            IEnumerable<Customer> customers;
+            try
+            {
+            customers = _context.Customers.Include(c => c.MembershipType).ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return View(customers);
+        }
+
+
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -62,6 +70,25 @@ namespace AngularMVCAuthentication.Controllers
             };
 
             return View("CustomerForm", viewModelCustomer);
+        }
+        public ActionResult Edit(int id)
+        {
+
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (customer == null)
+                return HttpNotFound();
+
+            var vm = new CustomerFromViewModel()
+            {  Id= customer.Id,
+                Name = customer.Name,
+                BirthDate = customer.BirthDate,
+                IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter,
+                MembershipTypeId = customer.MembershipTypeId,
+                MembershipTypes = _context.MembershipTypes.ToList()
+
+            };
+
+            return View("CustomerForm", vm);
         }
 
         [HttpPost]
@@ -75,6 +102,8 @@ namespace AngularMVCAuthentication.Controllers
                 viewModel.MembershipTypes = _context.MembershipTypes.ToList();
                 return View("CustomerForm", viewModel);
             }
+
+
 
             var customer = new Customer();
             if (viewModel.Id == 0)
@@ -109,26 +138,5 @@ namespace AngularMVCAuthentication.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit(int id)
-        {
-
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
-            if (customer == null)
-                return HttpNotFound();
-
-            var vm = new CustomerFromViewModel()
-            {
-                Name = customer.Name,
-                BirthDate = customer.BirthDate,
-                IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter,
-                MembershipTypeId = customer.MembershipTypeId,
-                MembershipTypes = _context.MembershipTypes.ToList()
-
-            };
-
-
-            return View("CustomerForm", vm);
-
-        }
     }
 }
