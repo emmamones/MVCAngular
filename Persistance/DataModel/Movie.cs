@@ -14,6 +14,7 @@ namespace Persistance.DataModel
         [Required]
         public DateTime? ReleaseDate { get; set; }
 
+        [Required]
         public DateTime? ArrivalDate { get; set; }
         public string DirectorName { get; set; }
 
@@ -22,6 +23,7 @@ namespace Persistance.DataModel
 
         public virtual Genre Genre { get; set; }
 
+        [Required]
         public int GenreId { get; set; }
     }
 }

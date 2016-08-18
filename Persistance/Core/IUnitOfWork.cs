@@ -12,6 +12,8 @@ namespace Persistance.Core
     {
         IEventoRepository Eventos { get; }
 
+        IGenreRepository Genres { get; }
+
         IMovieRepository Movies { get; }
         int Complete();
     }
