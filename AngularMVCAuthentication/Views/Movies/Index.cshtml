@@ -8,41 +8,41 @@
 
 <h2>Index</h2>
 
-<p> 
+<p>
     @Html.ActionLink("Create New", "New")
 </p>
 @*
-    <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Genre.Name)
-        </th>
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+        <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre.Name)
+            </th>
 
-</table>
-    *@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+*@
 
 <div ng-controller="GenreController">
 
@@ -72,16 +72,22 @@
                     <a ng-href="@Url.Content("~/Movies/Edit/"){{movie.Id}}">{{movie.Name}} </a>
                 </td>
                 <td>
-                    <div class="control-group input-append">
-                        <input type="text" ng-model="movie.ReleaseDate" data-date-format="dd/mm/yyyy" bs-datepicker>
-                        <button type="button" class="btn" data-toggle="datepicker"><i class="icon-calendar"></i></button>
-                    </div>
+                    @*<p class="input-group" style="margin-bottom: 0px">
+                        <input type="text" class="form-control" datetime-picker="MM/dd/yyyy" ng-model="movie.ReleaseDate" is-open="isOpen" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'ReleaseDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>*@
+                    @*<input type="text" value="" ng-model="movie.ReleaseDate.replace('/Date(','').replace(')/','') | date:'MM/dd/yyyy'">*@
+                    <mydatepicker ng-model="movie.ReleaseDate" date-options="dateOptions" opened="opened" format="format" />     
+                    @*Date format: <input ng-model="format"> <hr />
+                    Current time is: <span my-current-time="format"></span>*@
                 </td>
                 <td>{{movie.ArrivalDate}}</td>
                 <td>{{movie.DirectorName}}</td>
                 <td><input type="text" ng-model="movie.InStock" /></td>
                 <td><select ng-model="movie.GenreId" ng-options="genre.Id as genre.Name for genre in modelGenre"></select></td>
-                <td>  
+                <td>
                     <a ng-href="@Url.Content("~/Movies/Details/"){{movie.Id}}">Details </a>|
                     <a ng-href="@Url.Content("~/Movies/Delete/"){{movie.Id}}">Delete</a>
                 </td>
@@ -93,6 +99,6 @@
 
 
 </div>
-@section scripts{
+@section jsCode{
 
 }

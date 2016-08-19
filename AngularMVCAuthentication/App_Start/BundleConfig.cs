@@ -21,14 +21,18 @@ namespace AngularMVCAuthentication
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js"
+                      ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                                  "~/Scripts/angular.js",
+                                 "~/Scripts/bootstrap.js",
                                  "~/Scripts/angular-route.js",
                                  "~/Scripts/angular-strap.js",
-                                  "~/myapp.js"));
+                                  "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js",
+                                  "~/Scripts/datetime-picker.js",
+                                    "~/myapp.js"));
 
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
