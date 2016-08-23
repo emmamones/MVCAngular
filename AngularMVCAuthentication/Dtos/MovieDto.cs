@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace Persistance.DataModel
+namespace AngularMVCAuthentication.Dtos
 {
-   public class Movie : CUserEntity
+    public class MovieDto
     {
+        public int Id { get; set; }
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
@@ -22,9 +22,7 @@ namespace Persistance.DataModel
 
         [Required]
         public byte InStock { get; set; }
-
-        public virtual Genre Genre { get; set; }
-
+          
         [Required]
         public int GenreId { get; set; }
     }

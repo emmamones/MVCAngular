@@ -23,6 +23,7 @@ namespace AngularMVCAuthentication.Controllers
             _context.Dispose();
         }
 
+        [HttpGet]
         public ActionResult Details(int? Id)
         {
             Customer custDetail = null;
@@ -59,7 +60,7 @@ namespace AngularMVCAuthentication.Controllers
             return View(customers);
         }
 
-
+        [HttpGet]
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipTypes.ToList();
@@ -71,6 +72,9 @@ namespace AngularMVCAuthentication.Controllers
 
             return View("CustomerForm", viewModelCustomer);
         }
+
+
+        [HttpGet]
         public ActionResult Edit(int id)
         {
 
@@ -92,7 +96,7 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken()]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(CustomerFromViewModel viewModel)
         {
             
