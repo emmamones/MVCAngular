@@ -74,7 +74,7 @@ app.factory('crudServiceMovies', function ($http) {
 
     crudMovies.getGenres = function () {
         var genres;
-        genres = $http({ method: 'Get', url: '/Movies/Genres' })
+        genres = $http({ method: 'Get', url: '/api/Genres' })
             .then(function (response) {
                 return response.data;
             });

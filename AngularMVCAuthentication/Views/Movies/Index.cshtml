@@ -86,7 +86,7 @@
                 <td>{{movie.ArrivalDate}}</td>
                 <td>{{movie.DirectorName}}</td>
                 <td><input type="text" ng-model="movie.InStock" /></td>
-                <td><select ng-model="movie.GenreId" ng-options="genre.Id as genre.Name for genre in modelGenre"></select></td>
+                <td><select ng-model="movie.GenreId" ng-options="genre.Id as genre.Name for genre in modelGenres"></select></td>
                 <td>
                     <a ng-href="@Url.Content("~/Movies/Details/"){{movie.Id}}">Details </a>|
                     <a ng-href="@Url.Content("~/Movies/Delete/"){{movie.Id}}">Delete</a>
