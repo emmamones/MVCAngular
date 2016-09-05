@@ -69,19 +69,10 @@
             </tr>
             <tr ng-repeat="movie in modelMovies | filter:search | orderBy:key:AscOrDesc">
                 <td>
-                    <a ng-href="@Url.Content("~/Movies/Edit/"){{movie.Id}}">{{movie.Name}} </a>
+                    @*<a ng-href="@Url.Content("~/Movies/Edit/"){{movie.Id}}">{{movie.Name}} </a>*@
+                    <button class="btn btn-link" ng-click="EditMovie(movie.Id)" >{{movie.Name}}</button>
                 </td>
-                <td>
-                    @*<p class="input-group" style="margin-bottom: 0px">
-                        <input type="text" class="form-control" datetime-picker="MM/dd/yyyy" ng-model="movie.ReleaseDate" is-open="isOpen" />
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openCalendar($event, 'ReleaseDate')"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>*@
-                    @*<input type="text" value="" ng-model="movie.ReleaseDate.replace('/Date(','').replace(')/','') | date:'MM/dd/yyyy'">*@
-                    <mydatepicker ng-model="movie.ReleaseDate" date-options="dateOptions" opened="opened" format="format" />     
-                    @*Date format: <input ng-model="format"> <hr />
-                    Current time is: <span my-current-time="format"></span>*@
+                <td>  
                 </td>
                 <td>{{movie.ArrivalDate}}</td>
                 <td>{{movie.DirectorName}}</td>

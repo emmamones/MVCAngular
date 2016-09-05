@@ -20,7 +20,7 @@ namespace AngularMVCAuthentication.Controllers
             _context = new PersistanceContext();
         }
 
-
+        [HttpGet]
         public ActionResult Genres()
         { 
             List<Genre> genres = null;
@@ -32,6 +32,7 @@ namespace AngularMVCAuthentication.Controllers
 
             return Json(genres, JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
         public ActionResult ByGenre(int id)
         {
             if (id == 0)
@@ -46,6 +47,7 @@ namespace AngularMVCAuthentication.Controllers
             return Json(pelis, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         [Route("movies")]
         public ActionResult Index(int? pageIndex)
         {
@@ -63,6 +65,7 @@ namespace AngularMVCAuthentication.Controllers
             return View(pelis);
         }
 
+        [HttpGet]
         [Route("movies/details/{id}")]
         public ActionResult Details(int? Id)
         {
@@ -96,6 +99,7 @@ namespace AngularMVCAuthentication.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public ActionResult New()
         {
             IEnumerable<Genre> genres = null;
@@ -111,6 +115,9 @@ namespace AngularMVCAuthentication.Controllers
             };
             return View("MoviesForm", viewModelMovies);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "canEdit")]
         public ActionResult Edit(int Id)
         {
             var movie = _context.Movies.SingleOrDefault(c => c.Id == Id);
@@ -133,7 +140,8 @@ namespace AngularMVCAuthentication.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken()]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "canEdit")]
         public ActionResult Save(MovieFormViewModel vmModel)
         {
             if (!ModelState.IsValid)

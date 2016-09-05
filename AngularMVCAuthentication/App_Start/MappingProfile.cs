@@ -13,7 +13,10 @@ namespace AngularMVCAuthentication.App_Start
         public MappingProfile()
         {
             Mapper.CreateMap<Genre, GenreDto>();
-            Mapper.CreateMap<GenreDto, Genre>().ForMember(m=> m.Id,opt =>opt.Ignore());
+            Mapper.CreateMap<GenreDto, Genre>().ForMember(m => m.Id, opt => opt.Ignore());
+            Mapper.CreateMap<Movie, MovieDto>();
+            Mapper.CreateMap<MovieDto, Movie>().ForMember(m => m.Id, opt => opt.Ignore());
+
         }
     }
 }

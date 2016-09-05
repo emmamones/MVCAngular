@@ -186,7 +186,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\api\CustomersController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\EventosController.cs" />
     <Compile Include="Controllers\api\GenresController.cs" />
@@ -195,7 +194,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DataModel\MigrateContextConfiguration.cs" />
     <Compile Include="DataModel\Min18YearsIfAMember.cs" />
-    <Compile Include="Dtos\GenreDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

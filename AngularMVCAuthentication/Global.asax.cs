@@ -22,11 +22,13 @@ namespace AngularMVCAuthentication
         protected void Application_Start()
         {
             Mapper.Initialize(c => c.AddProfile<MappingProfile>());
+
             GlobalConfiguration.Configure(WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
 
             if (Debugger.IsAttached)
             {
@@ -35,9 +37,9 @@ namespace AngularMVCAuthentication
                 System.Data.Entity.Database.SetInitializer<ModelContext>(new DropContextConfiguration());
             }
             else
-            { 
+            {
                 InitPersistanceDataBase.SetInitializer(2);
-                System.Data.Entity.Database.SetInitializer<ModelContext>(null); 
+                System.Data.Entity.Database.SetInitializer<ModelContext>(null);
             }
         }
     }

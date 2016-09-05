@@ -29,9 +29,7 @@ namespace AngularMVCAuthentication
                                  "~/Scripts/angular.js",
                                  "~/Scripts/bootstrap.js",
                                  "~/Scripts/angular-route.js",
-                                 "~/Scripts/angular-strap.js",
-                                  "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js",
-                                  "~/Scripts/datetime-picker.js",
+                                 "~/Scripts/angular-strap.js", 
                                     "~/myapp.js"));
 
 

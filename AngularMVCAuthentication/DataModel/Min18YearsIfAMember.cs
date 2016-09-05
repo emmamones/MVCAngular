@@ -1,4 +1,5 @@
 ﻿using AngularMVCAuthentication.ViewModels;
+using Persistance.DataModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace AngularMVCAuthentication.DataModel
         {
            var customer=(CustomerFromViewModel) validationContext.ObjectInstance;
 
-            if (customer.MembershipTypeId == 0 || customer.MembershipTypeId == 1)
+            if (customer.MembershipTypeId == MembershipType.Unknown || customer.MembershipTypeId == MembershipType.PayAsYouGo)
                 return ValidationResult.Success;
             else
             {
