@@ -39,7 +39,7 @@ namespace Persistance.DataAccess
             var sBuilder = new SqlConnectionStringBuilder(argDBConnectionString);
             sBuilder.MultipleActiveResultSets = true;
 
-            _Context = new PersistanceContext(sBuilder.ToString());
+            _Context = new PersistanceDBContext(sBuilder.ToString());
         }
 
 

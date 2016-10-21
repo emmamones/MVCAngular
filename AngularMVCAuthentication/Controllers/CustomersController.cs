@@ -12,10 +12,10 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class CustomersController : Controller
     {
-        private PersistanceContext _context;
+        private PersistanceDBContext _context;
         public CustomersController()
         {
-            _context = new PersistanceContext();
+            _context = new PersistanceDBContext();
 
         }
         protected override void Dispose(bool disposing)

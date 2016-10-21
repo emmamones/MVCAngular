@@ -10,13 +10,13 @@ using System.Data.Entity;
 
 namespace Persistance.Repositories
 {
-    public class GenreRepository : DataRepository<Genre>, IGenreRepository
+    public class CustomerRepository : DataRepository<Customer>, ICustomerRepository
     { 
-        public GenreRepository(PersistanceDBContext context) : base(context)
+        public CustomerRepository(PersistanceDBContext context) : base(context)
         {
         }
          
-
+        
         public PersistanceDBContext MyContext {
             get {
                 return _Context as PersistanceDBContext;

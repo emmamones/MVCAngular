@@ -10,8 +10,7 @@ using Persistance;
 using Persistance.DataModel;
 using Persistance.Core;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
-using AngularMVCAuthentication.Models;
+using Microsoft.AspNet.Identity; 
 using Microsoft.AspNet.Identity.Owin;
 
 namespace AngularMVCAuthentication.Controllers
@@ -24,7 +23,7 @@ namespace AngularMVCAuthentication.Controllers
         // GET: Eventos
         public ActionResult Index()
         {
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
 
                 return View(uW.Eventos.GetAll().ToList());
@@ -39,7 +38,7 @@ namespace AngularMVCAuthentication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Evento evento = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 evento = uW.Eventos.Get(id.Value);
                 if (evento == null)
@@ -66,7 +65,7 @@ namespace AngularMVCAuthentication.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var uW = new UnitOfWork(new PersistanceContext()))
+                using (var uW = new UnitOfWork(new PersistanceDBContext()))
                 {
 
                     var store = new UserStore<ApplicationUser>(uW.Eventos.GetContext());
@@ -74,11 +73,11 @@ namespace AngularMVCAuthentication.Controllers
                     currentUser = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
                     var usName = currentUser.UserName;
 
-                    evento.ApplicationUser = new MyUserInfo() { UserName = usName };
+                   // evento.ApplicationUser = new MyUserInfo() { UserName = usName };
                     evento.CreatedBy = usName;
                     evento.Created = DateTime.Now;
 
-                    var context = System.Web.HttpContext.Current.GetOwinContext().Get<ModelContext>();
+                    var context = System.Web.HttpContext.Current.GetOwinContext().Get<PersistanceDBContext>();
 
                     uW.Eventos.Add(evento, usName);
 
@@ -103,7 +102,7 @@ namespace AngularMVCAuthentication.Controllers
             }
 
             Evento evento = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 evento = uW.Eventos.Get(id.Value);
                 if (evento == null)
@@ -140,7 +139,7 @@ namespace AngularMVCAuthentication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Evento evento = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 evento = uW.Eventos.Get(id.Value);
                 if (evento == null)
@@ -158,7 +157,7 @@ namespace AngularMVCAuthentication.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Evento evento = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 evento = uW.Eventos.Get(id);
                 uW.Eventos.Remove(evento);

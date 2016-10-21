@@ -12,7 +12,7 @@ namespace Persistance.Repositories
 {
     public class MovieRepository : DataRepository<Movie>, IMovieRepository
     { 
-        public MovieRepository(PersistanceContext context) : base(context)
+        public MovieRepository(PersistanceDBContext context) : base(context)
         {
         }
          
@@ -41,9 +41,9 @@ namespace Persistance.Repositories
         
         }
 
-        public PersistanceContext MyContext {
+        public PersistanceDBContext MyContext {
             get {
-                return _Context as PersistanceContext;
+                return _Context as PersistanceDBContext;
             }
         }
     }

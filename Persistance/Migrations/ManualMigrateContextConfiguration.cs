@@ -1,5 +1,7 @@
 namespace Persistance.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Persistance;
     using Persistance.DataModel;
     using System;
@@ -8,31 +10,38 @@ namespace Persistance.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class ManualMigrateContextConfiguration : DbMigrationsConfiguration<Persistance.PersistanceContext>
+    internal sealed class ManualMigrateContextConfiguration : DbMigrationsConfiguration<Persistance.PersistanceDBContext>
     {
         public ManualMigrateContextConfiguration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        MyUserInfo AddUserAndRole(PersistanceContext context)
+        ApplicationUser AddUserAndRole(PersistanceDBContext context)
         {
-            var user = new MyUserInfo()
+            IdentityResult ir;
+            var rm = new RoleManager<IdentityRole>
+                (new RoleStore<IdentityRole>(context));
+
+            rm.Create(new IdentityRole("canRead"));
+            ir = rm.Create(new IdentityRole("canEdit"));
+
+            var um = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(context));
+            var user = new ApplicationUser()
             {
-                Id = 1,
-                Created = DateTime.Now,
-                CreatedBy = "seed",
-                UserName = "user1@contoso.com",
-                FirstName = "Emmanuel",
-                LastName = "Lohora",
-                Eventos = new System.Collections.Generic.List<Evento>()
+                UserName = "user1@contoso.com"
             };
 
+            ir = um.Create(user, "P_assw0rd1");
+            if (ir.Succeeded == false)
+                return null;
+
+            ir = um.AddToRole(user.Id, "canEdit");
             return user;
         }
 
-
-        protected override void Seed(PersistanceContext context)
+        protected override void Seed(PersistanceDBContext context)
         {
             using (DbContextTransaction dbContextTransaction = context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable))
             {
@@ -41,15 +50,15 @@ namespace Persistance.Migrations
 
                 context.Eventos.AddOrUpdate(p => p.Title,
                       new Evento
-                      { Id = 1, Title = "Debra Garcia", ApplicationUser = defaultUser, Created = DateTime.Now, CreatedBy = "seed" },
+                      { Id = 1, Title = "Debra Garcia", ApplicationUserName = defaultUser.UserName, Created = DateTime.Now, CreatedBy = "seed" },
                       new Evento
-                      { Id = 2, Title = "Thorsten Weinrich", ApplicationUser = defaultUser, Created = DateTime.Now, CreatedBy = "seed" },
+                      { Id = 2, Title = "Thorsten Weinrich", ApplicationUserName = defaultUser.UserName, Created = DateTime.Now, CreatedBy = "seed" },
                       new Evento
-                      { Id = 3, Title = "Yuhong Li", ApplicationUser = defaultUser, Created = DateTime.Now, CreatedBy = "seed" },
+                      { Id = 3, Title = "Yuhong Li", ApplicationUserName = defaultUser.UserName, Created = DateTime.Now, CreatedBy = "seed" },
                       new Evento
-                      { Id = 4, Title = "Jon Orton", ApplicationUser = defaultUser, Created = DateTime.Now, CreatedBy = "seed" },
+                      { Id = 4, Title = "Jon Orton", ApplicationUserName = defaultUser.UserName, Created = DateTime.Now, CreatedBy = "seed" },
                       new Evento
-                      { Id = 5, Title = "Diliana Alexieva-Bosseva", ApplicationUser = defaultUser, Created = DateTime.Now, CreatedBy = "seed" }
+                      { Id = 5, Title = "Diliana Alexieva-Bosseva", ApplicationUserName = defaultUser.UserName, Created = DateTime.Now, CreatedBy = "seed" }
                       );
 
 
@@ -63,12 +72,14 @@ namespace Persistance.Migrations
 
                 genres.ForEach(s => context.Genres.AddOrUpdate(p => p.Id, s));
 
-                context.Movies.AddOrUpdate(m => m.Name,
-                       new Movie { Id = 1, Name = "Shrek!", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
-                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 2) },
-                       new Movie { Id = 3, Name = "Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-5), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 3) },
-                       new Movie { Id = 4, Name = "Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1), Created = DateTime.Now, CreatedBy = "seed", InStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 4) });
+                var movies = new List<Movie>
+                {
+                       new Movie { Id = 1, Name = "Shrek!", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-15), Created = DateTime.Now, CreatedBy = "seed", NumberInStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 1) },
+                       new Movie { Id = 2, Name = "Tarzan", DirectorName = "Spike Lee", ReleaseDate = DateTime.Now.AddDays(-10), Created = DateTime.Now, CreatedBy = "seed", NumberInStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 2) },
+                       new Movie { Id = 3, Name = "Caliman", DirectorName = "Steven Spielberg", ReleaseDate = DateTime.Now.AddDays(-5), Created = DateTime.Now, CreatedBy = "seed", NumberInStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 3) },
+                       new Movie { Id = 4, Name = "Independence day", DirectorName = "James Cameron", ReleaseDate = DateTime.Now.AddDays(-1), Created = DateTime.Now, CreatedBy = "seed", NumberInStock = 5, Genre = genres.SingleOrDefault(c => c.Id == 4) } };
 
+                movies.ForEach(m => context.Movies.AddOrUpdate(p => p.Id, m));
 
                 var memberships = new List<MembershipType> {
                     new MembershipType {  Id = 1, SignUpFee = 0, DurationInMonths = 0, DiscountRate = 0, Created = DateTime.Now, CreatedBy = "seed" , Name = "Free" },
@@ -80,11 +91,21 @@ namespace Persistance.Migrations
                 memberships.ForEach(s => context.MembershipTypes.AddOrUpdate(p => p.Id, s));
 
 
-                context.Customers.AddOrUpdate(T => T.Id,
-                           new Customer { Name = "Alberto", Id = 1, BirthDate = Convert.ToDateTime("01/01/1984"), IsSubscribedToNewsLetter = false, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 1) }
-                         , new Customer { Name = "Federico", Id = 2, BirthDate = Convert.ToDateTime("01/01/1986 "), IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 2) }
-                         , new Customer { Name = "Roberto", Id = 3, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 3) }
-                         , new Customer { Name = "Ismael", Id = 4, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 4) }
+              var Customers= new List<Customer> {
+                           new Customer { Name = "Alberto", Id = 1, BirthDate = Convert.ToDateTime("01/01/1984"), IsSubscribedToNewsLetter = false, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 1) },
+                           new Customer { Name = "Federico", Id = 2, BirthDate = Convert.ToDateTime("01/01/1986 "), IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 2) },
+                           new Customer { Name = "Roberto", Id = 3, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 3) },
+                           new Customer { Name = "Ismael", Id = 4, IsSubscribedToNewsLetter = true, Created = DateTime.Now, CreatedBy = "seed", MembershipType = memberships.SingleOrDefault(c => c.Id == 4) }
+                         };
+
+                Customers.ForEach(c => context.Customers.AddOrUpdate(p => p.Id, c));
+
+
+
+                context.Rentals.AddOrUpdate(T => T.Id,
+                           new Rental { Id = 1, Customer = Customers.Single(c => c.Id == 1), RentDate = Convert.ToDateTime("01/01/1984"),  ReturnDate = Convert.ToDateTime("01/01/2016"),  Movie = movies.Single(m=>m.Id==1), Created = DateTime.Now, CreatedBy = "seed" }
+                         , new Rental { Id = 2, Customer = Customers.Single(c => c.Id == 1), RentDate = Convert.ToDateTime("01/01/1984"), ReturnDate = Convert.ToDateTime("01/01/2016"), Movie = movies.Single(m => m.Id == 2), Created = DateTime.Now, CreatedBy = "seed" }
+
                          );
 
             }

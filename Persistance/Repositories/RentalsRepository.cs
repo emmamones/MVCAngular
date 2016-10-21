@@ -10,9 +10,9 @@ using System.Data.Entity;
 
 namespace Persistance.Repositories
 {
-    public class GenreRepository : DataRepository<Genre>, IGenreRepository
+    public class RentalsRepository : DataRepository<Rental>, IRentalsRepository
     { 
-        public GenreRepository(PersistanceDBContext context) : base(context)
+        public RentalsRepository(PersistanceDBContext context) : base(context)
         {
         }
          
@@ -21,6 +21,11 @@ namespace Persistance.Repositories
             get {
                 return _Context as PersistanceDBContext;
             }
+        }
+
+        public Rental RentMovie(string CustomerId, int[] MovieIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

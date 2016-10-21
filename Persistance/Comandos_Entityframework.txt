@@ -1,0 +1,13 @@
+﻿
+Enable-Migrations -ContextTypeName PersistanceDBContext -force
+
+Enable-Migrations -ContextTypeName ModelContext -MigrationsDirectory AspNetMigrations -force
+
+add-Migration Initial -ConfigurationTypeName AutomaticIdentityModelConfiguration -force
+
+Update-Database -ConfigurationTypeName AutomaticIdentityModelConfiguration -force
+
+
+Add-Migration CreateModel -ConfigurationTypeName AutomaticPersistanceDBContextConfiguration -force
+
+Update-Database -ConfigurationTypeName AutomaticPersistanceDBContextConfiguration -force 

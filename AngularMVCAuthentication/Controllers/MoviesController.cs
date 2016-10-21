@@ -14,17 +14,17 @@ namespace AngularMVCAuthentication.Controllers
 {
     public class MoviesController : Controller
     {
-        private PersistanceContext _context;
+        private PersistanceDBContext _context;
         public MoviesController()
         {
-            _context = new PersistanceContext();
+            _context = new PersistanceDBContext();
         }
 
         [HttpGet]
         public ActionResult Genres()
         { 
             List<Genre> genres = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 genres = uW.Genres.GetAll().ToList();
             }
@@ -38,7 +38,7 @@ namespace AngularMVCAuthentication.Controllers
             if (id == 0)
                 id = 1;
             List<Movie> pelis = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 pelis = uW.Movies.ByGenre(id).ToList();
             }
@@ -56,7 +56,7 @@ namespace AngularMVCAuthentication.Controllers
 
 
             List<Movie> pelis = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 pelis = uW.Movies.GetAllMoviesWithGender(pageIndex.Value).ToList();
             }
@@ -70,13 +70,13 @@ namespace AngularMVCAuthentication.Controllers
         public ActionResult Details(int? Id)
         {
             Movie peli = null;
-            var viewModel = new RandomMovieVIewModel();
+            var viewModel = new RandomMovieViewModel();
 
             if (!Id.HasValue)
                 return View(viewModel);
 
 
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 peli = uW.Movies.Get(Id.Value);
             }
@@ -90,7 +90,7 @@ namespace AngularMVCAuthentication.Controllers
             List<Customer> customers = null;
             customers = _context.Customers.Include(c => c.MembershipType).ToList();
 
-            viewModel = new RandomMovieVIewModel
+            viewModel = new RandomMovieViewModel
             {
                 Movie = peli,
                 Customers = customers
@@ -104,7 +104,7 @@ namespace AngularMVCAuthentication.Controllers
         {
             IEnumerable<Genre> genres = null;
 
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 genres = uW.Genres.GetAll();
             }
@@ -131,7 +131,7 @@ namespace AngularMVCAuthentication.Controllers
                 ReleaseDate = movie.ReleaseDate,
                 ArrivalDate = movie.ArrivalDate,
                 DirectorName = movie.DirectorName,
-                InStock = movie.InStock,
+                InStock = movie.NumberInStock,
                 GenreId = movie.GenreId,
                 Genres  = _context.Genres.ToList()
             };
@@ -159,13 +159,13 @@ namespace AngularMVCAuthentication.Controllers
                     ReleaseDate = vmModel.ReleaseDate,
                     ArrivalDate = vmModel.ArrivalDate,
                     DirectorName = vmModel.DirectorName,
-                    InStock = vmModel.InStock,
+                    NumberInStock = vmModel.InStock,
                     GenreId = vmModel.GenreId,
                     Created = DateTime.Now,
                     CreatedBy = "Em"
                 };
 
-                using (var uW = new UnitOfWork(new PersistanceContext()))
+                using (var uW = new UnitOfWork(new PersistanceDBContext()))
                 {
                     uW.Movies.Add(currentMovie, "Em");
                     uW.Complete();
@@ -175,7 +175,7 @@ namespace AngularMVCAuthentication.Controllers
             else
             {
                 var currentMovie = new Movie();
-                using (var uW = new UnitOfWork(new PersistanceContext()))
+                using (var uW = new UnitOfWork(new PersistanceDBContext()))
                 {
                     currentMovie = uW.Movies.Get(vmModel.Id);
 
@@ -186,7 +186,7 @@ namespace AngularMVCAuthentication.Controllers
                     currentMovie.ReleaseDate = vmModel.ReleaseDate;
                     currentMovie.ArrivalDate = vmModel.ArrivalDate;
                     currentMovie.DirectorName = vmModel.DirectorName;
-                    currentMovie.InStock = vmModel.InStock;
+                    currentMovie.NumberInStock = vmModel.InStock;
                     currentMovie.GenreId = vmModel.GenreId;
                     currentMovie.Updated = DateTime.Now;
                     currentMovie.UpdatedBy = "Em";

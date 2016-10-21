@@ -9,8 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using AngularMVCAuthentication.Models;
+using Microsoft.Owin.Security; 
+using Persistance.DataModel;
+using Persistance;
 
 namespace AngularMVCAuthentication
 {

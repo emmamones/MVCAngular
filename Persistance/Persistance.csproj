@@ -57,30 +57,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetMigrations\201610211529539_Initial.cs" />
+    <Compile Include="AspNetMigrations\201610211529539_Initial.Designer.cs">
+      <DependentUpon>201610211529539_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AspNetMigrations\Configuration.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\UnitOfWork.cs" />
     <Compile Include="DataAccess\DataRepository.cs" />
     <Compile Include="DataAccess\IRepository.cs" />
     <Compile Include="DataModel\CModelBase.cs" />
+    <Compile Include="DataModel\Customer.Create.cs" />
     <Compile Include="DataModel\Customer.cs" />
     <Compile Include="DataModel\Genre.cs" />
+    <Compile Include="DataModel\IdentityModels.cs" />
     <Compile Include="DataModel\Movie.cs" />
     <Compile Include="DataModel\MembershipType.cs" />
-    <Compile Include="Migrations\201608181334400_InitialMIgration.cs" />
-    <Compile Include="Migrations\201608181334400_InitialMIgration.Designer.cs">
-      <DependentUpon>201608181334400_InitialMIgration.cs</DependentUpon>
+    <Compile Include="DataModel\Rental.cs" />
+    <Compile Include="Migrations\201610211550391_CreateModel.cs" />
+    <Compile Include="Migrations\201610211550391_CreateModel.Designer.cs">
+      <DependentUpon>201610211550391_CreateModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\ManualMigrateContextConfiguration.cs" />
+    <Compile Include="ModelContext.cs" />
+    <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\ICustomerRepository.cs" />
+    <Compile Include="Repositories\RentalsRepository.cs" />
+    <Compile Include="Repositories\IRentalsRepository.cs" />
     <Compile Include="Repositories\IGenreRepository.cs" />
     <Compile Include="Repositories\GenreRepository.cs" />
     <Compile Include="Repositories\MovieRepository.cs" />
     <Compile Include="Repositories\IMovieRepository.cs" />
-    <Compile Include="Seeds\AutomaticMigrateContextConfiguration.cs" />
-    <Compile Include="Seeds\DropContextConfiguration.cs" />
+    <Compile Include="AspNetMigrations\AutomaticIdentityModelConfiguration.cs" />
+    <Compile Include="Migrations\AutomaticPersistanceDBContextConfiguration.cs" />
+    <Compile Include="AspNetMigrations\DropIdentityModelConfiguration.cs" />
+    <Compile Include="Migrations\DropPersistanceDBContextConfiguration.cs" />
     <Compile Include="DataModel\CUserEntity.cs" />
     <Compile Include="DataModel\Evento.cs" />
-    <Compile Include="PersistanceDbContext.cs" />
-    <Compile Include="DataModel\MyUserInfo.cs" />
+    <Compile Include="PersistanceDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="InitPersistanceDataBase.cs" />
     <Compile Include="Repositories\EventoRepository.cs" />
@@ -91,9 +106,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608181334400_InitialMIgration.resx">
-      <DependentUpon>201608181334400_InitialMIgration.cs</DependentUpon>
+    <Folder Include="Seeds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AspNetMigrations\201610211529539_Initial.resx">
+      <DependentUpon>201610211529539_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610211550391_CreateModel.resx">
+      <DependentUpon>201610211550391_CreateModel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Comandos_Entityframework.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

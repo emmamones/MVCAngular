@@ -14,7 +14,7 @@ namespace Persistance.DataModel
 { 
     public class Evento : CUserEntity
     { 
-       public string Title { get; set; }
+        public string Title { get; set; }
         public System.DateTime? DateEvent { get; set; }
         public string Location { get; set; }
         public string URL { get; set; }
@@ -24,12 +24,12 @@ namespace Persistance.DataModel
         {
             get
             {
-                return ApplicationUser.UserName;
+                return ApplicationUserName;
             }
         }
 
         public string Recommendation { get; set; }
-        public virtual MyUserInfo ApplicationUser { get; set; }
+        public string ApplicationUserName { get; set; }
 
     }
 

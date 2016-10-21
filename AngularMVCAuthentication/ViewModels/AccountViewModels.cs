@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AngularMVCAuthentication.Models
+namespace AngularMVCAuthentication.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

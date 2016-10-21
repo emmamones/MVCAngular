@@ -7,8 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using AngularMVCAuthentication.Models;
+using Microsoft.Owin.Security; 
+using Persistance.DataModel;
+using AngularMVCAuthentication.ViewModels;
 
 namespace AngularMVCAuthentication.Controllers
 {

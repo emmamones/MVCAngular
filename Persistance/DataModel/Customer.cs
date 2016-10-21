@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Persistance.DataModel
 {
-   public class Customer:CUserEntity
+   public partial class Customer:CUserEntity
     {
         [Required]
         [StringLength(255)]

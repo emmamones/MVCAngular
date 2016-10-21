@@ -12,10 +12,13 @@ namespace Persistance.DataModel
         [Display(Name = "Created At")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? Created { get; set; }
+
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
+
         [Display(Name = "Updated At")]
         public DateTime? Updated { get; set; }
+
         [Display(Name = "Updated By")]
         public string UpdatedBy { get; set; }
 

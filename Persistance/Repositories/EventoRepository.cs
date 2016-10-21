@@ -10,7 +10,7 @@ namespace Persistance.Repositories
 {
     public class EventoRepository : DataRepository<Evento>, IEventoRepository
     { 
-        public EventoRepository(PersistanceContext context) : base(context)
+        public EventoRepository(PersistanceDBContext context) : base(context)
         {
         }
         public IEnumerable<Evento> GetlastEvents(int count)
@@ -20,12 +20,12 @@ namespace Persistance.Repositories
 
         public IEnumerable<Evento> GetAllEventsBy(string argUser)
         {
-            return MyContext.Eventos.Where(c => c.ApplicationUser.UserName.Equals(argUser)).ToList();
+            return MyContext.Eventos.Where(c => c.ApplicationUserName.Equals(argUser)).ToList();
         }
 
-        public PersistanceContext MyContext {
+        public PersistanceDBContext MyContext {
             get {
-                return _Context as PersistanceContext;
+                return _Context as PersistanceDBContext;
             }
         }
     }

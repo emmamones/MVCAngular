@@ -1,16 +1,9 @@
 ﻿
-using Persistance.Core;
-using Persistance.DataModel;
+
+using Persistance.AspNetMigrations;
 using Persistance.Migrations;
-using Persistance.Repositories;
-using Persistance.Seeds;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistance
 {
@@ -22,14 +15,16 @@ namespace Persistance
             {
                 case 1://debug
                     Console.WriteLine("Database.SetInitializer(DataContextConfiguration)");
-                    System.Data.Entity.Database.SetInitializer<PersistanceContext>(new DropContextConfiguration());
+                    System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, AutomaticIdentityModelConfiguration>(true));
+                    System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceDBContext, AutomaticPersistanceDBContextConfiguration>(true));
+                    //System.Data.Entity.Database.SetInitializer<PersistanceDBContext>(new DropPersistanceDBContextConfiguration("user1@contoso.com"));
                     break;
 
                 case 2:
                     try
                     {
                         Console.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
-                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, AutomaticMigrateContextConfiguration>(true)); 
+                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceDBContext, AutomaticPersistanceDBContextConfiguration>(true)); 
                     }
                     catch (Exception ex)
                     { 
@@ -42,7 +37,7 @@ namespace Persistance
                     try
                     {
                         Console.WriteLine("Database.SetInitializer(MigrateDatabaseToLatestVersion)");
-                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceContext, ManualMigrateContextConfiguration>(true));
+                        System.Data.Entity.Database.SetInitializer(new MigrateDatabaseToLatestVersion<PersistanceDBContext, ManualMigrateContextConfiguration>(true));
                     }
                     catch (Exception ex)
                     { 

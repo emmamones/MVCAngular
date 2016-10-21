@@ -1,24 +1,23 @@
-
-using AngularMVCAuthentication.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Persistance.DataModel; 
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 
-namespace AngularMVCAuthentication.DataModel
+namespace Persistance.Migrations
 {
-
-
-    public sealed class MigrateContextConfiguration : DbMigrationsConfiguration<ModelContext>
+    /// <summary>
+    /// sealed does not allow to inherit from it.
+    /// </summary>
+    public sealed class DropIdentityModelConfiguration : DropCreateDatabaseAlways<ModelContext>
     {
-        public MigrateContextConfiguration()
+        public DropIdentityModelConfiguration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
-        }
 
+        }
         ApplicationUser AddUserAndRole(ModelContext context)
         {
             IdentityResult ir;
@@ -40,12 +39,17 @@ namespace AngularMVCAuthentication.DataModel
                 return null;
 
             ir = um.AddToRole(user.Id, "canEdit");
+
+            context.Users.AddOrUpdate(user);
+            context.SaveChanges();
             return user;
         }
 
+
         protected override void Seed(ModelContext context)
         {
-            var defaultUser = AddUserAndRole(context);
+            var defaultUser = AddUserAndRole(context); 
         }
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AngularMVCAuthentication.App_Start;
-using AngularMVCAuthentication.DataModel;
-using AngularMVCAuthentication.Models;
+using AngularMVCAuthentication.DataModel; 
 using AutoMapper;
 using Persistance;
 using Persistance.Core;
@@ -33,13 +32,11 @@ namespace AngularMVCAuthentication
             if (Debugger.IsAttached)
             {
                 Console.WriteLine("Debugger.IsAttached");
-                InitPersistanceDataBase.SetInitializer(1);
-                System.Data.Entity.Database.SetInitializer<ModelContext>(new DropContextConfiguration());
+                InitPersistanceDataBase.SetInitializer(1); 
             }
             else
             {
-                InitPersistanceDataBase.SetInitializer(2);
-                System.Data.Entity.Database.SetInitializer<ModelContext>(null);
+                InitPersistanceDataBase.SetInitializer(2); 
             }
         }
     }

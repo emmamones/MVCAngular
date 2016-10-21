@@ -15,7 +15,7 @@ namespace AngularMVCAuthentication.Controllers.api
 {
     public class CustomersController : ApiController
     {
-        private PersistanceContext db = new PersistanceContext();
+        private PersistanceDBContext db = new PersistanceDBContext();
 
         // GET: api/Customers
         public IQueryable<Customer> GetCustomers()

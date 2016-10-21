@@ -10,12 +10,12 @@ namespace AngularMVCAuthentication.ViewModels
 {
     public class CustomerFromViewModel
     {
+        public int Id { get; set; }
 
         [Required( ErrorMessage ="Please enter custmer's name")]
         [StringLength(255)]
         public string Name { get; set; }
 
-        public int Id { get; set; }
 
         [Display(Name = "Date of Birth")]
         [Min18YearsIfAMember]

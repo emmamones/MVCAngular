@@ -1,24 +1,20 @@
-﻿using AngularMVCAuthentication.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿ using Microsoft.AspNet.Identity.EntityFramework;
+using Persistance.DataModel;
 
-namespace AngularMVCAuthentication
+namespace Persistance
 {
 
     public class ModelContext : IdentityDbContext<ApplicationUser>
     {
+        public const string _DatabaseName = "AngularMVCJourny";
+
         public ModelContext(string argConnectionString)
            : base(argConnectionString, throwIfV1Schema: false)
         {
 
         }
         public ModelContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(_DatabaseName, throwIfV1Schema: false)
         {
 
         }

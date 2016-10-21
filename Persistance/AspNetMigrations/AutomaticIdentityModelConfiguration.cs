@@ -1,21 +1,22 @@
-
-using AngularMVCAuthentication.Models;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Data.Entity;
+using Persistance.DataModel;
 using System.Data.Entity.Migrations;
-using System.Linq;
 
-namespace AngularMVCAuthentication.DataModel
+namespace Persistance.AspNetMigrations
 {
-
-
-    public sealed class DropContextConfiguration : DropCreateDatabaseIfModelChanges<ModelContext>
-    {
-        public DropContextConfiguration()
-        { 
+    /// <summary>
+    /// sealed does not allow to inherit from it.
+    /// </summary>
+    public sealed class AutomaticIdentityModelConfiguration : DbMigrationsConfiguration<ModelContext>
+    { 
+        public AutomaticIdentityModelConfiguration()
+        {
+            MigrationsDirectory = @"AspNetMigrations";
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true; 
         }
+
         ApplicationUser AddUserAndRole(ModelContext context)
         {
             IdentityResult ir;
@@ -29,17 +30,22 @@ namespace AngularMVCAuthentication.DataModel
                 new UserStore<ApplicationUser>(context));
             var user = new ApplicationUser()
             {
-                UserName = "user1@contoso.com"
+                UserName = "user1@contoso.com", HomeTown="Mexico"
             };
 
             ir = um.Create(user, "P_assw0rd1");
             if (ir.Succeeded == false)
                 return null;
 
+            context.SaveChanges();
+
             ir = um.AddToRole(user.Id, "canEdit");
+
+            context.Users.AddOrUpdate(p=>p.UserName,user);
+            context.SaveChanges();
             return user;
         }
-
+        
         protected override void Seed(ModelContext context)
         {
             var defaultUser = AddUserAndRole(context);

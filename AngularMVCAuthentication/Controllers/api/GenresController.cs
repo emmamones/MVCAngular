@@ -11,21 +11,21 @@ using System.Web.Http.Description;
 using Persistance;
 using Persistance.DataModel;
 using Persistance.Core;
-using AngularMVCAuthentication.Dtos;
 using AutoMapper;
+using AngularMVCAuthentication.Dtos;
 
 namespace AngularMVCAuthentication.Controllers.api
 {
     public class GenresController : ApiController
     {
-        private PersistanceContext db = new PersistanceContext();
+        private PersistanceDBContext db = new PersistanceDBContext();
 
         // GET: api/Genres
         [HttpGet]
         public IHttpActionResult GetGenres()
         {
             IEnumerable<GenreDto> genres = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 genres = uW.Genres.GetAll().ToList().Select(Mapper.Map<Genre, GenreDto>);
 
@@ -42,7 +42,7 @@ namespace AngularMVCAuthentication.Controllers.api
                 return BadRequest();
 
             GenreDto result = null;
-            using (var uW = new UnitOfWork(new PersistanceContext()))
+            using (var uW = new UnitOfWork(new PersistanceDBContext()))
             {
                 var genre = uW.Genres.Get(id.Value);
                 result = Mapper.Map<Genre, GenreDto>(genre);
@@ -71,7 +71,7 @@ namespace AngularMVCAuthentication.Controllers.api
 
             try
             {
-                using (var uW = new UnitOfWork(new PersistanceContext()))
+                using (var uW = new UnitOfWork(new PersistanceDBContext()))
                 {
                     var customerInDb = uW.Genres.Get(id);
 
@@ -101,7 +101,7 @@ namespace AngularMVCAuthentication.Controllers.api
             try
             {
                 var genre = Mapper.Map<GenreDto, Genre>(genreDto);
-                using (var uW = new UnitOfWork(new PersistanceContext()))
+                using (var uW = new UnitOfWork(new PersistanceDBContext()))
                 {
                     uW.Genres.Add(genre, "Em");
                     uW.Complete();
